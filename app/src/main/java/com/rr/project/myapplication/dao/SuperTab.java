@@ -24,6 +24,11 @@ public class SuperTab {
         this.name = tabName;
         this.updateTime = date;
     }
+    
+    public SuperTab(String tabName) {
+        this.name = tabName;
+        this.updateTime = new Date().getTime();
+    }
 
     public int getId() {
         return id;
