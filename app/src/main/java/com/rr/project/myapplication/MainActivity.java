@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addSuperTab(View view) {
-        sTabViewModel.insertSuperTab(new SuperTab("test",new Date().getTime()));
+        //sTabViewModel.insertSuperTab(new SuperTab("test",new Date().getTime()));
+        sTabViewModel.insertSuperTab(new SuperTab("test"));
     }
 }
