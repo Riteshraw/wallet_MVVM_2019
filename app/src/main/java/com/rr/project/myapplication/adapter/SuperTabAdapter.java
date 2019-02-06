@@ -30,9 +30,9 @@ public class SuperTabAdapter extends RecyclerView.Adapter<SuperTabAdapter.SuperT
         
         public RecyclerviewItemBinding binding;
 
-        public SuperTabViewHolder(FlightItemLayoutBinding flightItemLayoutBinding) {
-            super(flightItemLayoutBinding.getRoot());
-            flightItemBinding = flightItemLayoutBinding;
+        public SuperTabViewHolder(RecyclerviewItemBinding recyclerviewItemBinding) {
+            super(recyclerviewItemBinding.getRoot());
+            binding = recyclerviewItemBinding;
         }
     }
 
@@ -42,8 +42,7 @@ public class SuperTabAdapter extends RecyclerView.Adapter<SuperTabAdapter.SuperT
 //         return new SuperTabViewHolder(itemView);
         
         RecyclerviewItemBinding binding = DataBindingUtil.inflate(R.layout.recyclerview_item, parent, false);    
-        SuperTabViewHolder viewHolder = new SuperTabViewHolder(binding);
-        return viewHolder;
+        return new SuperTabViewHolder(binding);
     }
 
     @Override
@@ -56,7 +55,7 @@ public class SuperTabAdapter extends RecyclerView.Adapter<SuperTabAdapter.SuperT
         } else {
             // Covers the case of data not being ready yet.
 //             holder.tabItemView.setText("No tab");
-              holder.binding.setText(current.getName());
+              holder.binding.setText("No Tab"));
         }
     }
 
