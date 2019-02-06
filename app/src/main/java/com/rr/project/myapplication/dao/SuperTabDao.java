@@ -12,7 +12,7 @@ import java.util.List;
 @Dao
 public interface SuperTabDao {
 
-    @Query("Select * from superTab_table")
+    @Query("Select * from superTab_table Order By updateTime ASC")
     LiveData<List<SuperTab>> getAllSuperTabs();
 
     @Delete
@@ -21,6 +21,11 @@ public interface SuperTabDao {
     @Insert
     void insertSuperTab(SuperTab superTab);
 
-    @Update
-    void updateSuperTab(SuperTab superTab);
+    //Need to update the updateTime every time a entry is made so that while fetching super tab list
+    //the entry made against the super tab is first
+    //@Update
+    //void updateSuperTab(SuperTab superTab);
+    @Query("UPDATE superTab_table SET updateTime = :time WHERE id = :id")
+    void update(long time, int id);
+
 }
