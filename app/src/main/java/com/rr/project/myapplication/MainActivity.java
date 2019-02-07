@@ -55,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addSuperTab(View view) {
-        sTabViewModel.insertSuperTab(new SuperTab("test",new Date().getTime()));
+      sTabViewModel.insertSuperTab(new SuperTab("test",new Date().getTime()));
+
+      //FragmentManager fm = getSupportFragmentManager();
+      //EditNameDialogFragment editNameDialogFragment = EditNameDialogFragment.newInstance("Some Title");
+      //editNameDialogFragment.show(fm, "fragment_edit_name");
     }
 }
