@@ -43,10 +43,22 @@ public class MainActivity extends AppCompatActivity {
         sTabAdapter = new SuperTabAdapter(this);
         recyclerview.setAdapter(sTabAdapter);
 
-        recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        //Check this link for gridlayout item spacing
+        //https://www.dev2qa.com/android-recyclerview-example/
+        
+        // Use gird or staggered grid layout item divider.
+        //GridDividerItemDecoration gridItemDivider = new GridDividerItemDecoration(getApplicationContext());
+        GridDividerDecoration gridItemDivider = new GridDividerDecoration(getApplicationContext());
+        recyclerView.addItemDecoration(gridItemDivider);
+        //recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        
     }
 
     public void addSuperTab(View view) {
-        sTabViewModel.insertSuperTab(new SuperTab("test",new Date().getTime()));
+      sTabViewModel.insertSuperTab(new SuperTab("test",new Date().getTime()));
+
+      //FragmentManager fm = getSupportFragmentManager();
+      //EditNameDialogFragment editNameDialogFragment = EditNameDialogFragment.newInstance("Some Title");
+      //editNameDialogFragment.show(fm, "fragment_edit_name");
     }
 }

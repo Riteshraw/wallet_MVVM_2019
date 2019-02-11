@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
+
 <layout >
 
     <data>
@@ -7,7 +7,6 @@
             name="superTab"
             type="com.rr.project.myapplication.dao.SuperTab" />
     </data>
--->
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -15,11 +14,25 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/entry"
+            android:id="@+id/txt_stab_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:text="@{superTab.name}"
             android:background="@android:color/holo_orange_light" />
+        
+        <TextView
+            android:id="@+id/txt_time"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@{superTab.getFormattedUpdateTime}"
+            android:background="@android:color/holo_orange_light" />
+        
+<!--    Try this if above solution doesn't work    
+        I think that putting the format in resources is best approach:
+        <string name="format">%1$td/%1$tm/%1$tY</string>
+        And you would bind the value to the resource like this:
+        <TextView ... android:text="@{@string/format(model.date)}" /> -->
 
     </LinearLayout>
 
-<!--</layout>                   -->
+</layout>

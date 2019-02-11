@@ -48,4 +48,10 @@ public class SuperTab {
     public void setUpdateTime(long updateTime) {
         this.updateTime = updateTime;
     }
+    
+    public String getFormattedUpdateTime(){
+    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm"); 
+    return formatter.format(new Date(dateInMillis)));;
+    }
+    
 }

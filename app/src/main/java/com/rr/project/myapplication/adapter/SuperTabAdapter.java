@@ -21,28 +21,41 @@ public class SuperTabAdapter extends RecyclerView.Adapter<SuperTabAdapter.SuperT
     }
 
     class SuperTabViewHolder extends RecyclerView.ViewHolder {
-        private final TextView tabItemView;
+//         private final TextView tabItemView;
+        
+//         private SuperTabViewHolder(View itemView) {
+//             super(itemView);
+//             tabItemView = itemView.findViewById(R.id.txt_entry);
+//         }
+        
+        public RecyclerviewItemBinding binding;
 
-        private SuperTabViewHolder(View itemView) {
-            super(itemView);
-            tabItemView = itemView.findViewById(R.id.entry);
+        public SuperTabViewHolder(RecyclerviewItemBinding recyclerviewItemBinding) {
+            super(recyclerviewItemBinding.getRoot());
+            binding = recyclerviewItemBinding;
         }
     }
 
     @Override
     public SuperTabViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.recyclerview_item, parent, false);
-        return new SuperTabViewHolder(itemView);
+//         View itemView = mInflater.inflate(R.layout.recyclerview_item, parent, false);
+//         return new SuperTabViewHolder(itemView);
+        
+        RecyclerviewItemBinding binding = DataBindingUtil.inflate(R.layout.recyclerview_item, parent, false);    
+        return new SuperTabViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(SuperTabViewHolder holder, int position) {
         if (superTabs != null) {
             SuperTab current = superTabs.get(position);
-            holder.tabItemView.setText(current.getName());
+//             holder.tabItemView.setText(current.getName());
+             holder.binding.setText(current.getName());
+
         } else {
             // Covers the case of data not being ready yet.
-            holder.tabItemView.setText("No tab");
+//             holder.tabItemView.setText("No tab");
+              holder.binding.setText("No Tab"));
         }
     }
 
