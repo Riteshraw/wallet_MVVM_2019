@@ -3,13 +3,14 @@ package com.rr.project.myapplication.dao;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
+import java.util.Date;
 
 @Entity(tableName = "entry_table",
         foreignKeys = @ForeignKey(
                 entity = Tab.class,
                 parentColumns = "id",
                 childColumns = "tabId"))
-
+@TypeConverters(DateConverter.class)
 public class Entry {
 
     @PrimaryKey(autoGenerate = true)
@@ -19,10 +20,9 @@ public class Entry {
     private String amount;
     private boolean isDebit;
     private String balance;
+    private Date date;
 
-    private long date;
-
-    public Entry(/*int id,*/ String note, String amount, boolean isDebit, int tabId, long date) {
+    public Entry(/*int id,*/ String note, String amount, boolean isDebit, int tabId, Date date) {
 //        this.id = id;
         this.note = note;
         this.amount = amount;
@@ -71,7 +71,7 @@ public class Entry {
         return date;
     }
 
-    public void setDate(long date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
