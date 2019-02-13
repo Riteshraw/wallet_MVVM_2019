@@ -28,13 +28,13 @@
                 android:gravity="center"
                 android:text="@{superTab.name}" />
 
-<!--            <TextView
+            <TextView
                 android:id="@+id/txt_time"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@{superTab.updateTime}" />-->
+                android:text="@{superTab.getFormattedUpdateTime}" />
 
         </LinearLayout>
     </android.support.v7.widget.CardView>

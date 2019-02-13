@@ -3,6 +3,9 @@ package com.rr.project.myapplication.dao;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Entity(tableName = "superTab_table")
 public class SuperTab {
 
@@ -48,4 +51,10 @@ public class SuperTab {
     public void setUpdateTime(long updateTime) {
         this.updateTime = updateTime;
     }
+
+    public String getFormattedUpdateTime(){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+        return formatter.format(new Date(updateTime));
+    }
+
 }
