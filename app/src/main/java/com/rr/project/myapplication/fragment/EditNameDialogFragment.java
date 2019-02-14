@@ -1,5 +1,7 @@
 package com.rr.project.myapplication.fragment;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -10,17 +12,20 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.QuickContactBadge;
+import android.widget.Toast;
 
 import com.rr.project.myapplication.R;
 import com.rr.project.myapplication.SuperTabViewModel;
 import com.rr.project.myapplication.dao.SuperTab;
 
 import java.util.Date;
+import java.util.List;
 // https://developer.android.com/reference/android/app/DialogFragment
 // https://guides.codepath.com/android/using-dialogfragment#passing-data-to-parent-fragment
 
 public class EditNameDialogFragment extends DialogFragment {
     private EditText mEditText;
+    private SuperTabViewModel sTabViewModel;
 
     public EditNameDialogFragment() {
         // Empty constructor is required for DialogFragment
@@ -91,7 +96,19 @@ public class EditNameDialogFragment extends DialogFragment {
 
     private void onTabNameSubmit() {
         if (!mEditText.getText().toString().isEmpty()) {
-            new SuperTabViewModel(getActivity().getApplication()).insertSuperTab(new SuperTab(mEditText.getText().toString(), new Date().getTime()));
+            sTabViewModel = ViewModelProviders.of(this).get(SuperTabViewModel.class);
+            final SuperTab superTab = new SuperTab(mEditText.getText().toString().toUpperCase(), new Date().getTime());
+
+            sTabViewModel.isSuperTabAlreadyPresent(superTab).observe(this, new Observer<Integer>() {
+                @Override
+                public void onChanged(@Nullable Integer entries) {
+                    if (entries == 0)
+                        sTabViewModel.insertSuperTab(superTab);
+                    else
+                        Toast.makeText(getActivity(), "Name already present", Toast.LENGTH_SHORT).show();
+                }
+            });
+//            new SuperTabViewModel(getActivity().getApplication()).isSuperTabAlreadyPresent(new SuperTab(mEditText.getText().toString(), new Date().getTime()));
             dismiss();
         }
         //close dialog on successful submit

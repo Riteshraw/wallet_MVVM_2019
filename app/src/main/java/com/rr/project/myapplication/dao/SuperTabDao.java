@@ -23,4 +23,8 @@ public interface SuperTabDao {
 
     @Update
     void updateSuperTab(SuperTab superTab);
+
+    @Query("Select count(*) from superTab_table where name= :superTabName")
+    LiveData<Integer> getAllSuperTabsWithName(String superTabName);
+
 }
