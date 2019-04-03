@@ -1,4 +1,4 @@
-package com.rr.project.myapplication;
+package com.rr.project.myapplication.viewModel;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;

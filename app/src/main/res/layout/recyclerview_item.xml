@@ -8,8 +8,8 @@
             type="com.rr.project.myapplication.dao.SuperTab" />
 
         <variable
-            name="handlers"
-            type="com.rr.project.myapplication.MyHandlers" />
+            name="clickHandler"
+            type="com.rr.project.myapplication.OnSuperTabClickListener" />
 
     </data>
 
@@ -18,8 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_gravity="center"
-        android:onClick="@{() -> handlers.onClick(superTab)}"
+        android:onClick="@{()-> clickHandler.onSuperTabClick(superTab)}"
         card_view:cardCornerRadius="4dp">
+        <!--android:onClick="@{() -> handlers.onClick(superTab)}"-->
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"

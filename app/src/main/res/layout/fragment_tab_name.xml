@@ -22,11 +22,11 @@
             android:text="Your Tab Name" />
 
         <ImageView
+            android:id="@+id/img_close_dialog"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:paddingRight="5dp"
             android:layout_gravity="center"
-            android:onClick="onDismiss"
             android:src="@mipmap/icon_close" />
 
     </LinearLayout>
@@ -42,7 +42,6 @@
         android:id="@+id/btn_tab_name_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onTabNameSubmit"
         android:text="Add Tab" />
 
 </LinearLayout>

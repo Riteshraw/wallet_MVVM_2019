@@ -15,4 +15,8 @@ public interface EntryDao {
 
     @Insert
     long insert(Entry entry);
+
+    @Query("Select count(*) from tab_table where tabName= :tabName")
+    LiveData<Integer> getAllTabsWithName(String tabName);
+
 }

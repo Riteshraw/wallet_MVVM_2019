@@ -20,15 +20,21 @@ public class Tab {
     public Tab() {
     }
 
-    public Tab(int id, String tabName, long date) {
+    /*public Tab(int id, String tabName, long date) {
         this.id = id;
         this.tabName = tabName;
         this.updateTime = date;
-    }
+    }*/
 
     public Tab(String tabName, long date) {
         this.tabName = tabName;
         this.updateTime = date;
+    }
+
+    public Tab(int superTabId, String tabName, long updateTime) {
+        this.superTabId = superTabId;
+        this.tabName = tabName;
+        this.updateTime = updateTime;
     }
 
     public int getId() {

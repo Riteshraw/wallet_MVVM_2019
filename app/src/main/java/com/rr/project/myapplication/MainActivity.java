@@ -2,31 +2,32 @@ package com.rr.project.myapplication;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.rr.project.myapplication.adapter.SuperTabAdapter;
 import com.rr.project.myapplication.dao.SuperTab;
 import com.rr.project.myapplication.fragment.EditNameDialogFragment;
 import com.rr.project.myapplication.view.GridDividerDecoration;
-import com.rr.project.myapplication.view.GridDividerItemDecoration;
+import com.rr.project.myapplication.viewModel.SuperTabViewModel;
 
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnSuperTabClickListener {
     private SuperTabViewModel sTabViewModel;
     private SuperTabAdapter sTabAdapter;
+    private Context context;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        context = this;
 
         sTabViewModel = ViewModelProviders.of(this).get(SuperTabViewModel.class);
 
@@ -47,7 +49,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        sTabAdapter = new SuperTabAdapter(this);
+        sTabAdapter = new SuperTabAdapter(this, new OnSuperTabClickListener() {
+            @Override
+            public void onSuperTabClick(SuperTab superTab) {
+                WalletApplication.getInstance().setSuperTab(superTab);
+
+                Intent intent = new Intent(context, TabActivity.class);
+                intent.putExtra(Constant.SUPER_TAB_NAME, superTab.getName());
+                intent.putExtra(Constant.SUPER_TAB_ID, superTab.getId());
+                startActivity(intent);
+                Toast.makeText(context, "Test", Toast.LENGTH_SHORT).show();
+            }
+        });
         recyclerView.setAdapter(sTabAdapter);
 
 
@@ -65,20 +78,39 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(gridItemDivider2);
         recyclerView.setLayoutManager(layoutManager);
 
+        /*new MyHandlers().setListener(new MyHandlers.OnSuperTabClickListener() {
+            @Override
+            public void onSuperTabClick(SuperTab superTab) {
+                Intent intent = new Intent(context, TabActivity.class);
+                intent.putExtra(Constant.SUPER_TAB_NAME, superTab.getName());
+                intent.putExtra(Constant.SUPER_TAB_ID, superTab.getId());
+                startActivity(intent);
+                Toast.makeText(context, "Test", Toast.LENGTH_SHORT).show();
+            }
+        });*/
+
 //        showEditDialog();
     }
 
     public void addSuperTab(View view) {
 //        sTabViewModel.isSuperTabAlreadyPresent(new SuperTab("test", new Date().getTime()));
         FragmentManager fm = getSupportFragmentManager();
-        EditNameDialogFragment editNameDialogFragment = EditNameDialogFragment.newInstance("Some Title");
+        EditNameDialogFragment editNameDialogFragment = EditNameDialogFragment.newInstance(Constant.SUPER_TAB, true);
         editNameDialogFragment.show(fm, "fragment_edit_name");
     }
 
     private void showEditDialog() {
-        FragmentManager fm = getSupportFragmentManager();
-        EditNameDialogFragment editNameDialogFragment = EditNameDialogFragment.newInstance("Some Title");
-        editNameDialogFragment.show(fm, "fragment_edit_name");
+//        FragmentManager fm = getSupportFragmentManager();
+//        EditNameDialogFragment editNameDialogFragment = EditNameDialogFragment.newInstance("Some Title");
+//        editNameDialogFragment.show(fm, "fragment_edit_name");
     }
 
+    @Override
+    public void onSuperTabClick(SuperTab superTab) {
+        Intent intent = new Intent(context, TabActivity.class);
+        intent.putExtra(Constant.SUPER_TAB_NAME, superTab.getName());
+        intent.putExtra(Constant.SUPER_TAB_ID, superTab.getId());
+        startActivity(intent);
+        Toast.makeText(context, "Test", Toast.LENGTH_SHORT).show();
+    }
 }

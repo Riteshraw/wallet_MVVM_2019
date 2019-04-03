@@ -19,4 +19,10 @@ public interface TabDao {
 
     @Insert
     void insertTab(Tab tab);
+
+    @Query("Select count(*) from tab_table where tabName= :tabName")
+    LiveData<Integer> getAllTabsWithName(String tabName);
+
+    @Query("Select * from tab_table where superTabId= :superTabId")
+    LiveData<List<Tab>> getAllTabsById(int superTabId);
 }

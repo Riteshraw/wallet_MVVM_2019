@@ -6,10 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.rr.project.myapplication.MyHandlers;
+import com.rr.project.myapplication.OnSuperTabClickListener;
 import com.rr.project.myapplication.R;
 import com.rr.project.myapplication.dao.SuperTab;
 import com.rr.project.myapplication.databinding.RecyclerviewItemBinding;
@@ -20,9 +19,10 @@ public class SuperTabAdapter extends RecyclerView.Adapter<SuperTabAdapter.SuperT
     private final LayoutInflater mInflater;
     private final Context context;
     private List<SuperTab> superTabs;
+    private OnSuperTabClickListener listener;
 
-    public SuperTabAdapter(Context context) {
-
+    public SuperTabAdapter(Context context, OnSuperTabClickListener onSuperTabClickListener) {
+        this.listener = onSuperTabClickListener;
         this.context = context;
         mInflater = LayoutInflater.from(context);
     }
@@ -47,7 +47,7 @@ public class SuperTabAdapter extends RecyclerView.Adapter<SuperTabAdapter.SuperT
 //        View itemView = mInflater.inflate(R.layout.recyclerview_item, parent, false);
 //        return new SuperTabViewHolder(itemView);
         RecyclerviewItemBinding binding = DataBindingUtil.inflate(mInflater, R.layout.recyclerview_item, parent, false);
-        binding.setHandlers(new MyHandlers());
+        binding.setClickHandler(listener);
         return new SuperTabViewHolder(binding);
     }
 
@@ -78,8 +78,8 @@ public class SuperTabAdapter extends RecyclerView.Adapter<SuperTabAdapter.SuperT
         else return 0;
     }
 
-    public void onClick(View view){
-        Toast.makeText(context,"Show Tab",Toast.LENGTH_SHORT).show();
+    public void onClick(View view) {
+        Toast.makeText(context, "Show Tab", Toast.LENGTH_SHORT).show();
     }
 
 }
