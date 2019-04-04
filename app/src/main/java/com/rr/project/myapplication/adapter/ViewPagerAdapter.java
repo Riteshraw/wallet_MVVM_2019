@@ -15,18 +15,20 @@ import java.util.ArrayList;
  */
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
+    private Context context;
     private String currentMonth;
     private ArrayList<Tab> listTab;
 
-    public ViewPagerAdapter(FragmentManager fm, ArrayList<Tab> listTab) {
+    public ViewPagerAdapter(FragmentManager fm, ArrayList<Tab> listTab, Context context) {
         super(fm);
         this.listTab = listTab;
+        this.context = context;
 //        this.currentMonth = currentMonth;
     }
 
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment = new FragmentTab();
+        Fragment fragment = new FragmentTab(context);
         return fragment;
     }
 

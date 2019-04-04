@@ -57,7 +57,7 @@ public class TabActivity extends AppCompatActivity {
         String supTabName = getIntent().getStringExtra(Constant.SUPER_TAB_NAME);
 
         setSupportActionBar(toolbar);
-        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), tabList);
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), tabList,context);
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 

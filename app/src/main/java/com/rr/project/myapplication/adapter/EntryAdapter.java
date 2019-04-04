@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import com.rr.project.myapplication.R;
 import com.rr.project.myapplication.dao.Entry;
 import com.rr.project.myapplication.dao.SuperTab;
+import com.rr.project.myapplication.dao.Tab;
 import com.rr.project.myapplication.databinding.RecyclerviewItemBinding;
+import com.rr.project.myapplication.databinding.RecyclerviewItemTabBinding;
 
 import java.util.List;
 
@@ -24,30 +26,35 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHol
     }
 
     class EntryViewHolder extends RecyclerView.ViewHolder {
-        private RecyclerviewItemBinding binding;
+        private RecyclerviewItemTabBinding binding;
 
-        private EntryViewHolder(RecyclerviewItemBinding recyclerviewItemBinding) {
-            super(recyclerviewItemBinding.getRoot());
-            binding = recyclerviewItemBinding;
+        private EntryViewHolder(RecyclerviewItemTabBinding recyclerviewItemTabBinding) {
+            super(recyclerviewItemTabBinding.getRoot());
+            binding = recyclerviewItemTabBinding;
         }
     }
 
     @Override
     public EntryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RecyclerviewItemBinding binding = DataBindingUtil.inflate(mInflater, R.layout.recyclerview_item_tab, parent, false);
+        RecyclerviewItemTabBinding binding = DataBindingUtil.inflate(mInflater, R.layout.recyclerview_item_tab, parent, false);
         return new EntryViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(EntryViewHolder holder, int position) {
-        /*if (listTabs != null) {
-            Tab current = listTabs.get(position);
-            holder.binding.settab(current);
+        if (listEntry != null) {
+            Entry current = listEntry.get(position);
+            holder.binding.setEntry(current);
         } else {
             // Covers the case of data not being ready yet.
 //            holder.tabItemView.setText("No tab");
 //            holder.binding.setText("No Tab"));
-        }*/
+        }
+    }
+
+    public void setEntry(List<Entry> listEntry) {
+        this.listEntry = listEntry;
+        notifyDataSetChanged();
     }
 
     // getItemCount() is called many times, and when it is first called,
@@ -58,10 +65,4 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHol
             return listEntry.size();
         else return 0;
     }
-
-    public void setEntry(List<Entry> listEntry) {
-        this.listEntry = listEntry;
-        notifyDataSetChanged();
-    }
-
 }

@@ -1,5 +1,6 @@
 package com.rr.project.myapplication.fragment;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -7,12 +8,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.rr.project.myapplication.R;
+import com.rr.project.myapplication.TabActivity;
 import com.rr.project.myapplication.adapter.EntryAdapter;
 import com.rr.project.myapplication.dao.Entry;
 import com.rr.project.myapplication.dao.SuperTab;
@@ -40,8 +44,9 @@ public class FragmentTab extends Fragment {
     private EntryAdapter entryAdapter;
     private Context context;
 
-    public FragmentTab() {
-        context = getContext();
+    @SuppressLint("ValidFragment")
+    public FragmentTab(Context context) {
+        this.context = context;
     }
 
     @Override
@@ -49,12 +54,15 @@ public class FragmentTab extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tab, container, false);
         ButterKnife.bind(this, view);
         entryAdapter = new EntryAdapter(getContext());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
+        tab_recyclerView.setLayoutManager(layoutManager);
+        tab_recyclerView.setAdapter(entryAdapter);
         return view;
     }
 
     public void onStart() {
         super.onStart();
-        entryViewModel = ViewModelProviders.of(getActivity()).get(EntryViewModel.class);
+        entryViewModel = ViewModelProviders.of((TabActivity) context).get(EntryViewModel.class);
 
         entryViewModel.getAllEntries().observe(this, new Observer<List<Entry>>() {
             @Override
@@ -70,6 +78,8 @@ public class FragmentTab extends Fragment {
                 addEntry();
             }
         });
+
+
     }
 
     private void addEntry() {

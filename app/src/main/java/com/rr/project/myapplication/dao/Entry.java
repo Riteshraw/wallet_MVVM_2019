@@ -4,6 +4,9 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Entity(tableName = "entry_table",
         foreignKeys = @ForeignKey(
                 entity = Tab.class,
@@ -91,5 +94,8 @@ public class Entry {
         this.balance = balance;
     }
 
-
+    public String getDateFormatted(){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        return formatter.format(new Date(date));
+    }
 }
