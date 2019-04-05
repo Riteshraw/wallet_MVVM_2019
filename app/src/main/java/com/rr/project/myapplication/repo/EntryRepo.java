@@ -16,6 +16,7 @@ import java.util.List;
 public class EntryRepo {
     private EntryDao entryDao;
     private LiveData<List<Entry>> listEntries;
+    private LiveData<List<Entry>> listEntriesById;
     public LiveData<Integer> tabNameCount;
 
     public EntryRepo(Application application) {
@@ -43,5 +44,10 @@ public class EntryRepo {
         protected Long doInBackground(Entry... entries) {
             return entryDao.insert(entries[0]);
         }
+    }
+
+    public LiveData<List<Entry>> getListAllEntryByTabId(int tabId) {
+        listEntriesById = entryDao.getListAllEntryByTabId(tabId);
+        return listEntriesById;
     }
 }

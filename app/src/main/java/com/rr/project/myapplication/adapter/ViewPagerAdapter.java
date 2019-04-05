@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.rr.project.myapplication.WalletApplication;
 import com.rr.project.myapplication.dao.Tab;
 import com.rr.project.myapplication.fragment.FragmentTab;
 
@@ -16,19 +17,18 @@ import java.util.ArrayList;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
     private Context context;
-    private String currentMonth;
     private ArrayList<Tab> listTab;
+    private Fragment fragment;
 
     public ViewPagerAdapter(FragmentManager fm, ArrayList<Tab> listTab, Context context) {
         super(fm);
         this.listTab = listTab;
         this.context = context;
-//        this.currentMonth = currentMonth;
     }
 
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment = new FragmentTab(context);
+        fragment = new FragmentTab();
         return fragment;
     }
 
@@ -48,6 +48,10 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         // Causes adapter to reload all Fragments when
         // notifyDataSetChanged is called
         return POSITION_NONE;
+    }
+
+    public Fragment getCurrentFragment() {
+        return fragment;
     }
 
 }

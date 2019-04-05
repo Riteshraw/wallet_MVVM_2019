@@ -65,15 +65,12 @@ public class MainActivity extends AppCompatActivity implements OnSuperTabClickLi
 
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
-//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
-//                ((GridLayoutManager) layoutManager).getOrientation());
-//        recyclerView.addItemDecoration(dividerItemDecoration);
+        //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+        //((GridLayoutManager) layoutManager).getOrientation());
+        //recyclerView.addItemDecoration(dividerItemDecoration);
         //Check this link for gridlayout item spacing
         //https://www.dev2qa.com/android-recyclerview-example/
 
-        // Use gird or staggered grid layout item divider.
-//        GridDividerItemDecoration gridItemDivider = new GridDividerItemDecoration(5,5,2);
-//        GridDividerDecoration gridItemDivider1 = new GridDividerDecoration(getApplicationContext());
         GridDividerDecoration gridItemDivider2 = new GridDividerDecoration(getApplicationContext());
         recyclerView.addItemDecoration(gridItemDivider2);
         recyclerView.setLayoutManager(layoutManager);
@@ -99,11 +96,11 @@ public class MainActivity extends AppCompatActivity implements OnSuperTabClickLi
         editNameDialogFragment.show(fm, "fragment_edit_name");
     }
 
-    private void showEditDialog() {
-//        FragmentManager fm = getSupportFragmentManager();
-//        EditNameDialogFragment editNameDialogFragment = EditNameDialogFragment.newInstance("Some Title");
-//        editNameDialogFragment.show(fm, "fragment_edit_name");
-    }
+    /*private void showEditDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        EditNameDialogFragment editNameDialogFragment = EditNameDialogFragment.newInstance("Some Title");
+        editNameDialogFragment.show(fm, "fragment_edit_name");
+    }*/
 
     @Override
     public void onSuperTabClick(SuperTab superTab) {

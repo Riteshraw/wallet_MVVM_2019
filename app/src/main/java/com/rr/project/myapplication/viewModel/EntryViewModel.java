@@ -15,8 +15,9 @@ import java.util.List;
 
 public class EntryViewModel extends AndroidViewModel {
 
-    private final LiveData<List<Entry>> listAllEntries;
-    private final EntryRepo entryRepo;
+    private LiveData<List<Entry>> listAllEntries;
+    private LiveData<List<Entry>> listAllEntriesById;
+    private EntryRepo entryRepo;
     private LiveData<Integer> tabNameCount;
 
     public EntryViewModel(@NonNull Application application) {
@@ -36,5 +37,10 @@ public class EntryViewModel extends AndroidViewModel {
     public LiveData<Integer> isSuperAlreadyPresent(Tab tab) {
         tabNameCount = entryRepo.getAllTabsWithName(tab);
         return tabNameCount;
+    }
+
+    public LiveData<List<Entry>> getListAllEntriesById(int tabId) {
+        listAllEntriesById = entryRepo.getListAllEntryByTabId(tabId);
+        return listAllEntriesById;
     }
 }

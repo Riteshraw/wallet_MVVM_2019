@@ -19,4 +19,6 @@ public interface EntryDao {
     @Query("Select count(*) from tab_table where tabName= :tabName")
     LiveData<Integer> getAllTabsWithName(String tabName);
 
+    @Query("Select count(*) from entry_table where id= :tabId")
+    LiveData<List<Entry>> getListAllEntryByTabId(int tabId);
 }

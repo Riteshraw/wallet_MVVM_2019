@@ -17,9 +17,11 @@ import android.view.ViewGroup;
 
 import com.rr.project.myapplication.R;
 import com.rr.project.myapplication.TabActivity;
+import com.rr.project.myapplication.WalletApplication;
 import com.rr.project.myapplication.adapter.EntryAdapter;
 import com.rr.project.myapplication.dao.Entry;
 import com.rr.project.myapplication.dao.SuperTab;
+import com.rr.project.myapplication.dao.Tab;
 import com.rr.project.myapplication.viewModel.EntryViewModel;
 import com.rr.project.myapplication.viewModel.SuperTabViewModel;
 
@@ -44,16 +46,15 @@ public class FragmentTab extends Fragment {
     private EntryAdapter entryAdapter;
     private Context context;
 
-    @SuppressLint("ValidFragment")
-    public FragmentTab(Context context) {
-        this.context = context;
+    public FragmentTab() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tab, container, false);
         ButterKnife.bind(this, view);
-        entryAdapter = new EntryAdapter(getContext());
+        context = getContext();
+        entryAdapter = new EntryAdapter(context);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         tab_recyclerView.setLayoutManager(layoutManager);
         tab_recyclerView.setAdapter(entryAdapter);
@@ -62,9 +63,9 @@ public class FragmentTab extends Fragment {
 
     public void onStart() {
         super.onStart();
-        entryViewModel = ViewModelProviders.of((TabActivity) context).get(EntryViewModel.class);
+        entryViewModel = ViewModelProviders.of(getActivity()).get(EntryViewModel.class);
 
-        entryViewModel.getAllEntries().observe(this, new Observer<List<Entry>>() {
+        entryViewModel.getListAllEntriesById(WalletApplication.getInstance().getTab().getId()).observe(this, new Observer<List<Entry>>() {
             @Override
             public void onChanged(@Nullable List<Entry> entries) {
                 if (entries != null)
@@ -75,16 +76,16 @@ public class FragmentTab extends Fragment {
         fab_add_entry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addEntry();
+                addEntry(null);
             }
         });
 
 
     }
 
-    private void addEntry() {
+    public void addEntry(Tab tab) {
         entryViewModel.insertEntry(new Entry(
-                "Initial debit", "40000", false, 1, new Date().getTime()
+                "Initial debit", "500", false, tab.getId(), new Date().getTime()
         ));
     }
 
