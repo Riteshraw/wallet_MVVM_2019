@@ -5,11 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
+    android:background="@color/colorWhite"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="42dp"
+        android:layout_height="40dp"
+        android:background="@color/colorPrimary"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -19,15 +21,18 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Your Tab Name" />
+            android:text="ENTER TAB NAME"
+            android:textColor="@color/colorWhite"
+            android:textSize="15sp" />
 
         <ImageView
             android:id="@+id/img_close_dialog"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:paddingRight="5dp"
             android:layout_gravity="center"
-            android:src="@mipmap/icon_close" />
+            android:paddingRight="5dp"
+            android:src="@mipmap/icon_close"
+            android:visibility="gone" />
 
     </LinearLayout>
 
@@ -35,13 +40,39 @@
         android:id="@+id/txt_your_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="7dp"
+        android:background="@drawable/bg_border"
         android:imeOptions="actionDone"
-        android:inputType="text" />
+        android:inputType="text"
+        android:padding="7dp" />
 
-    <Button
-        android:id="@+id/btn_tab_name_submit"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Tab" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_tab_name_submit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/holo_green_dark"
+            android:text="SUBMIT"
+            android:textColor="@color/colorWhite" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/holo_red_light"
+            android:text="Cancel"
+            android:textColor="@color/colorWhite"
+            android:textSize="15sp" />
+
+
+    </LinearLayout>
+
 
 </LinearLayout>

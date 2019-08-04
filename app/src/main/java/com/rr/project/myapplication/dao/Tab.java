@@ -4,13 +4,15 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "tab_table",
         foreignKeys = @ForeignKey(
                 entity = SuperTab.class,
                 parentColumns = "id",
                 childColumns = "superTabId"))
 
-public class Tab {
+public class Tab implements Serializable {
     @PrimaryKey(autoGenerate = true)
     int id;
     int superTabId;

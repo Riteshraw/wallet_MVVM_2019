@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 
 
 import com.rr.project.myapplication.dao.Entry;
-import com.rr.project.myapplication.dao.SuperTab;
 import com.rr.project.myapplication.dao.Tab;
 import com.rr.project.myapplication.repo.EntryRepo;
 
@@ -42,5 +41,17 @@ public class EntryViewModel extends AndroidViewModel {
     public LiveData<List<Entry>> getListAllEntriesById(int tabId) {
         listAllEntriesById = entryRepo.getListAllEntryByTabId(tabId);
         return listAllEntriesById;
+    }
+
+    public void deleteEntry(Entry entry) {
+        entryRepo.deleteEntry(entry);
+    }
+
+    public void updateEntry(Entry editEntry, boolean isDateChange) {
+        entryRepo.updateEntryWithAmtOrDateChange(editEntry, isDateChange);
+    }
+
+    public void updateEntryNote(Entry editEntry) {
+        entryRepo.updateEntry(editEntry);
     }
 }

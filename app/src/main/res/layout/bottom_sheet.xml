@@ -1,156 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#fff"
-    android:orientation="vertical"
     app:behavior_hideable="true"
     app:behavior_peekHeight="40dp"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/dialog_header"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_alignParentTop="true"
         android:background="@color/colorPrimary"
-        android:gravity="center">
-
-        <TextView
-            android:id="@+id/dialog_header"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Add Expense"
-            android:textColor="#FFF" />
-
-        <ImageView
-            android:id="@+id/img_dialog_close"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@mipmap/icon_close"
-            android:visibility="gone" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:visibility="visible">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="2dp"
-            android:text="Date"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/txt_entry_date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:padding="2dp"
-            android:text="Select Date"
-            android:textSize="15sp" />
-
-    </LinearLayout>
+        android:text="ADD EXPENSE"
+        android:textColor="#FFF"
+        android:textStyle="bold" />
 
     <LinearLayout
+        android:id="@+id/dialog_form"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/dialog_header"
+        android:layout_margin="5dp"
         android:orientation="horizontal">
 
         <EditText
             android:id="@+id/edt_note"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginRight="1dp"
             android:layout_weight="5"
+            android:background="@drawable/bg_border"
             android:gravity="top"
             android:hint="Note"
             android:maxLines="3"
-            android:padding="5dp"
+            android:padding="7dp"
             android:textSize="15sp" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="8dp"
-            android:background="@color/colorGrayContacts"></View>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2.5"
-            android:orientation="vertical">
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:weightSum="3">
+
+            <TextView
+                android:id="@+id/txt_entry_date"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_border"
+                android:gravity="center"
+                android:onClick="showTimePickerDialog"
+                android:padding="4dp"
+                android:text="Select Date"
+                android:textColor="@color/colorAccent"
+                android:textSize="15sp" />
 
             <RadioGroup
                 android:id="@+id/dialog_rg"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight=".8"
+                android:layout_marginBottom="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_border"
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/dialog_rb_debit"
+                    android:id="@+id/rb_debit"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Db" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:background="@color/colorGrayContacts"></View>
+                    android:text="DB" />
 
                 <RadioButton
-                    android:id="@+id/dialog_rb_credit"
+                    android:id="@+id/rb_credit"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Cd" />
+                    android:text="CD" />
 
             </RadioGroup>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@color/colorGrayContacts" />
 
             <EditText
                 android:id="@+id/edt_Amount"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:background="@drawable/bg_border"
                 android:gravity="center"
                 android:hint="Amount"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:padding="4dp"
+                android:textColor="@color/colorBlack"
                 android:textSize="15sp" />
 
         </LinearLayout>
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_add_entry"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:text="Add Expense"
-        android:textSize="15sp" />
+        android:layout_below="@+id/dialog_form"
+        android:orientation="horizontal">
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btn_add_entry"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/holo_green_dark"
+            android:text="Add"
+            android:textColor="@color/colorWhite"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/btn_delete_entry"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:text="@string/delete_entry"
+            android:textColor="@color/colorWhite"
+            android:visibility="gone"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/holo_red_light"
+            android:text="Cancel"
+            android:textColor="@color/colorWhite"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

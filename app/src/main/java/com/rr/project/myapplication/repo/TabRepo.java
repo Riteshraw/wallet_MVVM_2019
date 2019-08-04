@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
+import com.rr.project.myapplication.dao.Entry;
 import com.rr.project.myapplication.dao.Tab;
 import com.rr.project.myapplication.dao.TabDao;
 import com.rr.project.myapplication.db.WalletRoomDB;

@@ -9,6 +9,7 @@ public class WalletApplication extends Application {
     private static WalletApplication appInstance;
     private SuperTab superTab;
     private Tab tab;
+    private boolean isEditEntry;
 
     public static WalletApplication getInstance() {
         if (appInstance == null)
@@ -37,7 +38,15 @@ public class WalletApplication extends Application {
         this.tab = tab;
     }
 
-    /*public static LoginRepo getLoginRepo() {
+    public boolean isEditEntry() {
+        return isEditEntry;
+    }
+
+    public void setEditEntry(boolean editEntry) {
+        isEditEntry = editEntry;
+    }
+
+   /*public static LoginRepo getLoginRepo() {
         return LoginRepo.getInstance();
     }*/
 }

@@ -2,16 +2,20 @@ package com.rr.project.myapplication.adapter;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.rr.project.myapplication.R;
+import com.rr.project.myapplication.TabActivity;
 import com.rr.project.myapplication.dao.Entry;
 import com.rr.project.myapplication.dao.SuperTab;
 import com.rr.project.myapplication.dao.Tab;
 import com.rr.project.myapplication.databinding.RecyclerviewItemBinding;
 import com.rr.project.myapplication.databinding.RecyclerviewItemTabBinding;
+import com.rr.project.myapplication.fragment.FragmentTab;
 
 import java.util.List;
 
@@ -41,15 +45,30 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.EntryViewHol
     }
 
     @Override
-    public void onBindViewHolder(EntryViewHolder holder, int position) {
+    public void onBindViewHolder(EntryViewHolder holder, final int position) {
         if (listEntry != null) {
+            //(double)Math.round(101.850006*100)/100
             Entry current = listEntry.get(position);
             holder.binding.setEntry(current);
+            if (position == 0)
+                holder.binding.txtMonthHeader.setVisibility(View.VISIBLE);
+            else
+                holder.binding.txtMonthHeader.setVisibility(View.GONE);
         } else {
             // Covers the case of data not being ready yet.
 //            holder.tabItemView.setText("No tab");
 //            holder.binding.setText("No Tab"));
         }
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                //((TabActivity) context).deleteEntry(listEntry.get(position));
+                ((TabActivity) context).editEntry(listEntry.get(position));
+                return true;
+            }
+        });
+
     }
 
     public void setEntry(List<Entry> listEntry) {

@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,9 +23,11 @@ import com.rr.project.myapplication.adapter.EntryAdapter;
 import com.rr.project.myapplication.dao.Entry;
 import com.rr.project.myapplication.dao.SuperTab;
 import com.rr.project.myapplication.dao.Tab;
+import com.rr.project.myapplication.utils.Constants;
 import com.rr.project.myapplication.viewModel.EntryViewModel;
 import com.rr.project.myapplication.viewModel.SuperTabViewModel;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -37,6 +40,7 @@ import butterknife.ButterKnife;
 
 public class FragmentTab extends Fragment {
 
+    private Tab tab;
     @BindView(R.id.tab_recyclerView)
     RecyclerView tab_recyclerView;
     @BindView(R.id.fab_add_entry)
@@ -54,10 +58,16 @@ public class FragmentTab extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tab, container, false);
         ButterKnife.bind(this, view);
         context = getContext();
+
+        tab = (Tab) getArguments().getSerializable(Constants.TAB);
+
         entryAdapter = new EntryAdapter(context);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         tab_recyclerView.setLayoutManager(layoutManager);
         tab_recyclerView.setAdapter(entryAdapter);
+
+        tab_recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+
         return view;
     }
 
@@ -65,7 +75,7 @@ public class FragmentTab extends Fragment {
         super.onStart();
         entryViewModel = ViewModelProviders.of(getActivity()).get(EntryViewModel.class);
 
-        entryViewModel.getListAllEntriesById(WalletApplication.getInstance().getTab().getId()).observe(this, new Observer<List<Entry>>() {
+        entryViewModel.getListAllEntriesById(tab.getId()).observe(this, new Observer<List<Entry>>() {
             @Override
             public void onChanged(@Nullable List<Entry> entries) {
                 if (entries != null)
@@ -80,13 +90,21 @@ public class FragmentTab extends Fragment {
             }
         });
 
-
     }
 
-    public void addEntry(Tab tab) {
-        entryViewModel.insertEntry(new Entry(
-                "Initial debit", "500", false, tab.getId(), new Date().getTime()
-        ));
+    public void addEntry(Entry entry) {
+        entryViewModel.insertEntry(entry);
     }
 
+    public void deleteEntry(Entry entry) {
+        entryViewModel.deleteEntry(entry);
+    }
+
+    public void updateEntry(Entry editEntry, boolean isDateChange) {
+        entryViewModel.updateEntry(editEntry,isDateChange);
+    }
+
+    public void updateEntryNote(Entry editEntry) {
+        entryViewModel.updateEntryNote(editEntry);
+    }
 }

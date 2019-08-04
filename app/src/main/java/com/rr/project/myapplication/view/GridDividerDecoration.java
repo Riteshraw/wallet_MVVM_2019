@@ -28,7 +28,7 @@ public class GridDividerDecoration extends RecyclerView.ItemDecoration {
         mDivider = a.getDrawable(0);
         a.recycle();
 
-        mInsets = 10;
+        mInsets = 20;
     }
 
     @Override

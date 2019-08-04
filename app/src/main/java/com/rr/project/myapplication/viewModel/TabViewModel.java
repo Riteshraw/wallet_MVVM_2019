@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
+import com.rr.project.myapplication.dao.Entry;
 import com.rr.project.myapplication.dao.Tab;
 import com.rr.project.myapplication.repo.TabRepo;
 

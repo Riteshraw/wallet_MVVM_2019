@@ -1,6 +1,8 @@
 package com.rr.project.myapplication.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -8,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.rr.project.myapplication.WalletApplication;
 import com.rr.project.myapplication.dao.Tab;
 import com.rr.project.myapplication.fragment.FragmentTab;
+import com.rr.project.myapplication.utils.Constants;
 
 import java.util.ArrayList;
 
@@ -29,6 +32,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         fragment = new FragmentTab();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.TAB, listTab.get(position));
+        fragment.setArguments(bundle);
         return fragment;
     }
 

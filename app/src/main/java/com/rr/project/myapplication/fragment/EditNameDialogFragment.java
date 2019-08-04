@@ -53,35 +53,10 @@ public class EditNameDialogFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Pick a style based on the num.
-//        int style = DialogFragment.STYLE_NORMAL, theme = 0;
-//        switch ((mNum-1)%6) {
-//            case 1: style = DialogFragment.STYLE_NO_TITLE; break;
-//            case 2: style = DialogFragment.STYLE_NO_FRAME; break;
-//            case 3: style = DialogFragment.STYLE_NO_INPUT; break;
-//            case 4: style = DialogFragment.STYLE_NORMAL; break;
-//            case 5: style = DialogFragment.STYLE_NORMAL; break;
-//            case 6: style = DialogFragment.STYLE_NO_TITLE; break;
-//            case 7: style = DialogFragment.STYLE_NO_FRAME; break;
-//            case 8: style = DialogFragment.STYLE_NORMAL; break;
-//        }
-//        switch ((mNum-1)%6) {
-//            case 4: theme = android.R.style.Theme_Holo; break;
-//            case 5: theme = android.R.style.Theme_Holo_Light_Dialog; break;
-//            case 6: theme = android.R.style.Theme_Holo_Light; break;
-//            case 7: theme = android.R.style.Theme_Holo_Light_Panel; break;
-//            case 8: theme = android.R.style.Theme_Holo_Light; break;
-//        }
-        setStyle(DialogFragment.STYLE_NO_TITLE, android.R.style.Theme_Holo_Light_Dialog);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-//        getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         return inflater.inflate(R.layout.fragment_tab_name, container);
     }
 
@@ -104,7 +79,7 @@ public class EditNameDialogFragment extends DialogFragment {
             }
         });
 
-        ((ImageView) view.findViewById(R.id.img_close_dialog)).setOnClickListener(new View.OnClickListener() {
+        (view.findViewById(R.id.btn_cancel)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onDismiss();
@@ -147,14 +122,6 @@ public class EditNameDialogFragment extends DialogFragment {
         //close dialog on successful submit
     }
 
-     /*@Override
-     public Dialog onCreateDialog(Bundle savedInstanceState) {
-         Dialog dialog = super.onCreateDialog(savedInstanceState);
-         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-
-         return dialog;
-     }*/
-
      @Override
      public void onStart() {
          super.onStart();
@@ -165,6 +132,7 @@ public class EditNameDialogFragment extends DialogFragment {
  //            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
          }
      }
+
     public void onDismiss() {
         dismiss();
     }

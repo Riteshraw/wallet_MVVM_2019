@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">2019 Wallet</string>
+    <string name="FIRST_ENTRY_ERROR_MSG">First entry cannot be Debit</string>
+    <string name="delete_entry">Delete</string>
 </resources>
