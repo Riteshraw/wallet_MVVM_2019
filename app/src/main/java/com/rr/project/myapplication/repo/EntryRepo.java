@@ -84,7 +84,7 @@ public class EntryRepo {
         isCurrentDateEntry = entry.getDateString().equals(Utils.getCurrentDateInString());
 
         Entry prevEntry;
-        if (isCurrentDateEntry) {
+        if (isCurrentDateEntry || isTopEntry(entry)) {
 //            deleteEntry(editEntry);
             prevEntry = getLastEntryByIdForUpdateCase(entry.getTabId());
         } else {
@@ -118,7 +118,7 @@ public class EntryRepo {
         String month = (String) DateFormat.format("MMMM", date);
         String year = (String) DateFormat.format("yyyy", date);
 
-        if (!isCurrentDateEntry) {
+        if (!isCurrentDateEntry || !isTopEntry(entry)) {
             String newMonth = lastEntry.getNewMonth();
             lastEntry.setNewMonth("");
             lastEntry.setLatestEntry(false);
@@ -256,6 +256,14 @@ public class EntryRepo {
         return time;
     }
 
+    private boolean isTopEntry(Entry entry) {
+        Entry fetchedEntry = entryDao.getLastEntryById(entry.getTabId());
+        if (entry.getId() == fetchedEntry.getId())
+            return true;
+        else
+            return false;
+    }
+
     public interface InsertCompleteListener {
         void onInsertComplete(boolean isCurrentDateEntry);
     }
@@ -273,4 +281,6 @@ public class EntryRepo {
             updateBalanceOfEntriesAfterInsertion(oneUpEntry);
         }
     }
+
+
 }

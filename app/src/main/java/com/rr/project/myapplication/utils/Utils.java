@@ -91,4 +91,10 @@ public class Utils {
         return s.indexOf(".") < 0 ? s : s.replaceAll("0*$", "").replaceAll("\\.$", "");
     }
 
+    public static String removeTrailingZeros(float amt) {
+//        String s =
+                return String.valueOf((float)Math.round(amt * 100) / 100);
+//        return s.indexOf(".") < 0 ? s : s.replaceAll("0*$", "").replaceAll("\\.$", "");
+    }
+
 }

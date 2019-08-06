@@ -126,11 +126,13 @@ public class Entry implements Parcelable {
     }
 
     public String getBalanceAsString() {
-        return Utils.removeTrailingZeros(String.valueOf(balance));
+//        return Utils.removeTrailingZeros(String.valueOf(balance));
+        return Utils.removeTrailingZeros((balance));
     }
 
     public String getAmountAsString() {
-        return Utils.removeTrailingZeros(String.valueOf(amount));
+//        return Utils.removeTrailingZeros(String.valueOf(amount));
+        return Utils.removeTrailingZeros((amount));
     }
 
     public int getEntryMonth() {
