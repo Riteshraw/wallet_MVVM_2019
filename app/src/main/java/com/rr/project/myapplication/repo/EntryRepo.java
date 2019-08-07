@@ -37,9 +37,9 @@ public class EntryRepo {
         return listEntries;
     }
 
-    public void insertEntry(final Entry entry) {
+    public void insertEntry(final Entry entry, final boolean isCurrentDateEntry) {
         Entry prevEntry = null;
-        isCurrentDateEntry = entry.getDateString().equals(Utils.getCurrentDateInString());
+        //isCurrentDateEntry = entry.getDateString().equals(Utils.getCurrentDateInString());
 
         if (isCurrentDateEntry) {//current date entry
             entry.setLatestEntry(true);
@@ -112,13 +112,30 @@ public class EntryRepo {
 //        updateEntry(entry);
         new updateAynscTask().execute(entry);
     }
+    
+    public void updateEntryWithAmtOrDateChange(final Entry entry, boolean isDateChange) {
+        Entry prevEntry;
+	    boolean isTopEntry = isTopEntry(entry);
+
+        if (isTopEntryForTab && !isDateChange){//Entry is latest entry ,we need to just find the 2ndTop entry for balance calculation
+		    deleteEntry(entry);//delete entry from DB but maintain entry value for insertion
+		    insertEntry(entry,true);//true so that inserted entry is the latest/current date entry
+        } else {
+            //Entry is not the latest entry for selected TAB, can be any entry but not latest oone
+		    deleteEntry(entry);//delete entry from DB but maintain entry value for insertion
+	        insertEntry(entry,false);//false so that inserted entry is the back date entry
+        }
+
+    }
 
     private String getNewMonth(Entry entry, Entry lastEntry) {
         Date date = new Date();
         String month = (String) DateFormat.format("MMMM", date);
         String year = (String) DateFormat.format("yyyy", date);
 
-        if (!isCurrentDateEntry || !isTopEntry(entry)) {
+        //Entry back date, fetch newMonth of the last entry and mark it blank for last entry as the new would be 
+        //the entry on top of last entry. Return the same
+        if (!isCurrentDateEntry /*|| !isTopEntry(entry)*/) {
             String newMonth = lastEntry.getNewMonth();
             lastEntry.setNewMonth("");
             lastEntry.setLatestEntry(false);
@@ -126,6 +143,8 @@ public class EntryRepo {
             return newMonth;
         }
 
+        //When entry is current date entry & it is not the first entry i.e. entries are already present in the list
+        //So calculate the newMonth for last entry as month or year could have changed & if not then set it blank
         if (lastEntry != null) {
             String lastEntryMonth = (String) DateFormat.format("MMMM", lastEntry.getEntryTime());
             String lastEntryYear = (String) DateFormat.format("yyyy", lastEntry.getEntryTime());
