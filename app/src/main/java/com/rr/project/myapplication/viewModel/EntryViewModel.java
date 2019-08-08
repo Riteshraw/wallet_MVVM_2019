@@ -29,8 +29,8 @@ public class EntryViewModel extends AndroidViewModel {
         return listAllEntries;
     }
 
-    public void insertEntry(Entry entry) {
-        entryRepo.insertEntry(entry);
+    public void insertEntry(Entry entry, boolean isCurrentDateEntry) {
+        entryRepo.insertEntry(entry, isCurrentDateEntry);
     }
 
     public LiveData<Integer> isSuperAlreadyPresent(Tab tab) {
@@ -44,11 +44,12 @@ public class EntryViewModel extends AndroidViewModel {
     }
 
     public void deleteEntry(Entry entry) {
-        entryRepo.deleteEntry(entry);
+        entryRepo.deleteEntry(entry, 0);
     }
 
-    public void updateEntry(Entry editEntry, boolean isDateChange) {
-        entryRepo.updateEntryWithAmtOrDateChange(editEntry, isDateChange);
+    public void updateEntry(Entry editEntry, boolean isDateChange, long originalDate) {
+//        entryRepo.updateEntryWithAmtOrDateChange(editEntry, isDateChange);
+        entryRepo.updateEntryWithAmtOrDateChangeByDelete(editEntry, isDateChange, originalDate);
     }
 
     public void updateEntryNote(Entry editEntry) {

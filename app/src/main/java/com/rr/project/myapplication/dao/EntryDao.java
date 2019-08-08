@@ -34,6 +34,9 @@ public interface EntryDao {
     @Query("Select * from entry_table where tabId = :tabId order by entryTime DESC limit 1")
     Entry getLastEntryById(int tabId);
 
+    @Query("Select * from entry_table where tabId = :tabId and id != :id order by entryTime DESC limit 1")
+    Entry getLastEntryById(int tabId, int id);
+
     @Query("Select * from entry_table where tabId = :tabId and isLatestEntry = 0 order by entryTime DESC limit 1")
     Entry getLastEntryByIdForUpdateCase(int tabId);
 

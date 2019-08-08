@@ -196,7 +196,7 @@ public class TabActivity extends AppCompatActivity {
                         dateTime,
                         txt_entry_date.getText().toString(),
                         true
-                ));
+                ), txt_entry_date.getText().toString().equals(Utils.getCurrentDateInString()));
 
         Utils.hideKeyboard(this);
     }
@@ -312,8 +312,8 @@ public class TabActivity extends AppCompatActivity {
         txt_entry_date.setText(date);
     }
 
-    public void updateEntry(Entry editEntry, boolean isDateChange) {
-        ((FragmentTab) viewPagerAdapter.getCurrentFragment()).updateEntry(editEntry, isDateChange);
+    public void updateEntry(Entry editEntry, boolean isDateChange, long originalDate) {
+        ((FragmentTab) viewPagerAdapter.getCurrentFragment()).updateEntry(editEntry, isDateChange, originalDate);
     }
 
     public void updateEntryNote(Entry editEntry) {

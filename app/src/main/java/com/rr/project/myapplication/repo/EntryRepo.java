@@ -39,11 +39,12 @@ public class EntryRepo {
 
     public void insertEntry(final Entry entry, final boolean isCurrentDateEntry) {
         Entry prevEntry = null;
+        this.isCurrentDateEntry = isCurrentDateEntry;
         //isCurrentDateEntry = entry.getDateString().equals(Utils.getCurrentDateInString());
 
         if (isCurrentDateEntry) {//current date entry
             entry.setLatestEntry(true);
-            prevEntry = getLastEntryByTabId(entry.getTabId());
+            prevEntry = getLastEntryByTabId(entry.getTabId(), 0);
             if (prevEntry == null && entry.isDebit()) {//there is no entry i.e there is no entry in table
                 Toast.makeText(application, R.string.FIRST_ENTRY_ERROR_MSG, Toast.LENGTH_SHORT).show();
                 return;
@@ -67,7 +68,7 @@ public class EntryRepo {
         }
 
         //set newMonth for entry
-        entry.setNewMonth(getNewMonth(entry, prevEntry));
+        entry.setNewMonth(getNewMonth(entry, prevEntry, isCurrentDateEntry));
 
         insertCompleteListener = new InsertCompleteListener() {
             @Override
@@ -99,7 +100,7 @@ public class EntryRepo {
 
         entry.setBalance(getBalance(entry, prevEntry));
         //set newMonth for entry
-        entry.setNewMonth(getNewMonth(entry, prevEntry));
+        entry.setNewMonth(getNewMonth(entry, prevEntry, isCurrentDateEntry));
 
         updateCompleteListener = new UpdateCompleteListener() {
             @Override
@@ -112,30 +113,41 @@ public class EntryRepo {
 //        updateEntry(entry);
         new updateAynscTask().execute(entry);
     }
-    
-    public void updateEntryWithAmtOrDateChange(final Entry entry, boolean isDateChange) {
-        Entry prevEntry;
-	    boolean isTopEntry = isTopEntry(entry);
 
-        if (isTopEntryForTab && !isDateChange){//Entry is latest entry ,we need to just find the 2ndTop entry for balance calculation
-		    deleteEntry(entry);//delete entry from DB but maintain entry value for insertion
-		    insertEntry(entry,true);//true so that inserted entry is the latest/current date entry
+    public void updateEntryWithAmtOrDateChangeByDelete(final Entry entry, boolean isDateChange, long originalDate) {
+        boolean isTopEntry = isTopEntry(entry);
+
+        if (isTopEntry && !isDateChange) {//Entry is latest entry ,we need to just find the 2ndTop entry for balance calculation
+            deleteEntry(entry, originalDate);//delete entry from DB but maintain entry value for insertion
+//            entryDao.deleteEntry(entry);
+            insertEntry(entry, true);//true so that inserted entry is the latest/current date entry
         } else {
             //Entry is not the latest entry for selected TAB, can be any entry but not latest oone
-		    deleteEntry(entry);//delete entry from DB but maintain entry value for insertion
-	        insertEntry(entry,false);//false so that inserted entry is the back date entry
+            //            if (isTopEntry)
+//                setPrevEntryNewMonth(entry);
+            deleteEntry(entry, originalDate);//delete entry from DB but maintain entry value for insertion
+//            entryDao.deleteEntry(entry);
+            insertEntry(entry, false);//false so that inserted entry is the back date entry
         }
 
     }
 
-    private String getNewMonth(Entry entry, Entry lastEntry) {
+//    private void setPrevEntryNewMonth(Entry entry) {// Not considered if entry has header and is not top entry
+//        Entry lastEntry = getLastEntryByTabId(entry.getTabId(), entry.getId());
+//        //write query for the same
+//        Entry secondLastEntry = get2ndLastEntryByTabId(lastEntry.getTabId(), lastEntry.getId());
+//        lastEntry.setNewMonth(getNewMonth(lastEntry, secondLastEntry, true));
+//        updateEntry(lastEntry);
+//    }
+
+    private String getNewMonth(Entry entry, Entry lastEntry, boolean isCurrentDateEntry) {
         Date date = new Date();
         String month = (String) DateFormat.format("MMMM", date);
         String year = (String) DateFormat.format("yyyy", date);
 
         //Entry back date, fetch newMonth of the last entry and mark it blank for last entry as the new would be 
         //the entry on top of last entry. Return the same
-        if (!isCurrentDateEntry /*|| !isTopEntry(entry)*/) {
+        if (!isCurrentDateEntry) {// problem when back date is current months first entry, its displaying header for prev month
             String newMonth = lastEntry.getNewMonth();
             lastEntry.setNewMonth("");
             lastEntry.setLatestEntry(false);
@@ -186,8 +198,8 @@ public class EntryRepo {
         return tabNameCount;
     }
 
-    public void deleteEntry(Entry entry) {
-        Entry prevEntry = getPrevEntryByTabIdAndDate(entry.getTabId(), entry.getEntryTime());
+    public void deleteEntry(Entry entry, long originalDate) {
+        Entry prevEntry = getPrevEntryByTabIdAndDate(entry.getTabId(), originalDate == 0 ? entry.getEntryTime() : originalDate);
         entryDao.deleteEntry(entry);
         if (entry.isLatestEntry()) {
             updatePrevEntry(entry, prevEntry, true);
@@ -240,8 +252,11 @@ public class EntryRepo {
         return listEntriesById;
     }
 
-    public Entry getLastEntryByTabId(int tabId) {
-        return entryDao.getLastEntryById(tabId);
+    public Entry getLastEntryByTabId(int tabId, int id) {
+        if (id == 0)
+            return entryDao.getLastEntryById(tabId);
+        else
+            return entryDao.getLastEntryById(tabId, id);
     }
 
     public Entry getLastEntryByIdForUpdateCase(int tabId) {

@@ -86,22 +86,22 @@ public class FragmentTab extends Fragment {
         fab_add_entry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addEntry(null);
+//                addEntry(null);
             }
         });
 
     }
 
-    public void addEntry(Entry entry) {
-        entryViewModel.insertEntry(entry);
+    public void addEntry(Entry entry, boolean isCurrentDateEntry) {
+        entryViewModel.insertEntry(entry, isCurrentDateEntry);
     }
 
     public void deleteEntry(Entry entry) {
         entryViewModel.deleteEntry(entry);
     }
 
-    public void updateEntry(Entry editEntry, boolean isDateChange) {
-        entryViewModel.updateEntry(editEntry,isDateChange);
+    public void updateEntry(Entry editEntry, boolean isDateChange, long originalDate) {
+        entryViewModel.updateEntry(editEntry,isDateChange, originalDate);
     }
 
     public void updateEntryNote(Entry editEntry) {
