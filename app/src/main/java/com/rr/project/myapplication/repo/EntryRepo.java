@@ -162,6 +162,68 @@ public class EntryRepo {
 
         return month + "/" + year;
     }
+	
+    private String getNewMonth2(Entry entry, Entry lastEntry) {
+        Date date = new Date();
+        String month = (String) DateFormat.format("MMMM", date);
+        String year = (String) DateFormat.format("yyyy", date);
+	    
+	
+	if(lastEntry== null){//first entry in the db
+		return month/year;
+	}
+	else if(lastEntry.getMonth() == ""){//entry is in the middle where last entry's header is blank
+		reurn ""
+	}
+	else{//not correct logic? please verify, in this logic the previous entry's newMonth is being set considering the logic that current entry's is 
+	     //having new month or year. OR simply put this is the case when current entry is insertion where its month is greater than prev entry 
+	     //ie.first entry of a new month
+		
+	     //this is the case where we compare whether the currnet entry year/month > last entry's year/month
+	    String lastEntryMonth = (String) DateFormat.format("MMMM", lastEntry.getEntryTime());
+            String lastEntryYear = (String) DateFormat.format("yyyy", lastEntry.getEntryTime());
+
+            if (entry.getEntryMonth() > lastEntry.getEntryMonth())
+                lastEntry.setNewMonth(lastEntryMonth + "/" + lastEntryYear);
+            else if (entry.getEntryYear() > lastEntry.getEntryYear())
+                lastEntry.setNewMonth(lastEntryMonth + "/" + lastEntryYear);
+            else
+                lastEntry.setNewMonth("");
+
+            lastEntry.setLatestEntry(false);
+            updateEntry(lastEntry);
+	}
+	 
+
+        //Entry back date, fetch newMonth of the last entry and mark it blank for last entry as the new would be 
+        //the entry on top of last entry. Return the same
+        if (!isCurrentDateEntry /*|| !isTopEntry(entry)*/) {
+            String newMonth = lastEntry.getNewMonth();
+            lastEntry.setNewMonth("");
+            lastEntry.setLatestEntry(false);
+            updateEntry(lastEntry);
+            return newMonth;
+        }
+
+        //When entry is current date entry & it is not the first entry i.e. entries are already present in the list
+        //So calculate the newMonth for last entry as month or year could have changed & if not then set it blank
+        if (lastEntry != null) {
+            String lastEntryMonth = (String) DateFormat.format("MMMM", lastEntry.getEntryTime());
+            String lastEntryYear = (String) DateFormat.format("yyyy", lastEntry.getEntryTime());
+
+            if (entry.getEntryMonth() > lastEntry.getEntryMonth())
+                lastEntry.setNewMonth(lastEntryMonth + "/" + lastEntryYear);
+            else if (entry.getEntryYear() > lastEntry.getEntryYear())
+                lastEntry.setNewMonth(lastEntryMonth + "/" + lastEntryYear);
+            else
+                lastEntry.setNewMonth("");
+
+            lastEntry.setLatestEntry(false);
+            updateEntry(lastEntry);
+        }
+
+        return month + "/" + year;
+    }
 
     public int updateEntry(Entry entry) {
         return entryDao.updateEntry(entry);
