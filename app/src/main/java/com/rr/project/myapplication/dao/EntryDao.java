@@ -55,4 +55,6 @@ public interface EntryDao {
     @Query("Select * from entry_table where tabId = :tabId and entryTime > :entryTime order by entryTime ASC limit 1")
     Entry getOneUpEntryByDateTime(int tabId, long entryTime);
 
+    @Query("Select * from entry_table where tabId = :tabId and entryMonth = :entryMonth and entryYear =:entryYear and entryTime >:entryTime ")
+    Entry getEntryForMonthWithNewMonth(int tabId, int entryMonth, int entryYear, long entryTime);
 }

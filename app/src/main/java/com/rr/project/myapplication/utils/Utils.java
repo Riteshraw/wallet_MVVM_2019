@@ -6,6 +6,8 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.rr.project.myapplication.dao.Entry;
+
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -93,8 +95,16 @@ public class Utils {
 
     public static String removeTrailingZeros(float amt) {
 //        String s =
-                return String.valueOf((float)Math.round(amt * 100) / 100);
+        return String.valueOf((float) Math.round(amt * 100) / 100);
 //        return s.indexOf(".") < 0 ? s : s.replaceAll("0*$", "").replaceAll("\\.$", "");
+    }
+
+    public static boolean isDateGreater(Entry entry1, Entry entry2) {
+        if (entry1.getEntryMonth() > entry2.getEntryMonth())
+            return true;
+        else if (entry1.getEntryYear() > entry2.getEntryYear())
+            return true;
+        else return false;
     }
 
 }

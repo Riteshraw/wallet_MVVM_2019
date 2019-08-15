@@ -68,7 +68,7 @@ public class EntryRepo {
         }
 
         //set newMonth for entry
-        entry.setNewMonth(getNewMonth(entry, prevEntry, isCurrentDateEntry));
+        entry.setNewMonth(getNewMonth2(entry, prevEntry, isCurrentDateEntry));
 
         insertCompleteListener = new InsertCompleteListener() {
             @Override
@@ -100,7 +100,7 @@ public class EntryRepo {
 
         entry.setBalance(getBalance(entry, prevEntry));
         //set newMonth for entry
-        entry.setNewMonth(getNewMonth(entry, prevEntry, isCurrentDateEntry));
+        entry.setNewMonth(getNewMonth2(entry, prevEntry, isCurrentDateEntry));
 
         updateCompleteListener = new UpdateCompleteListener() {
             @Override
@@ -155,6 +155,7 @@ public class EntryRepo {
             return newMonth;
         }
 
+
         //When entry is current date entry & it is not the first entry i.e. entries are already present in the list
         //So calculate the newMonth for last entry as month or year could have changed & if not then set it blank
         if (lastEntry != null) {
@@ -173,6 +174,56 @@ public class EntryRepo {
         }
 
         return month + "/" + year;
+    }
+
+    private String getNewMonth2(Entry entry, Entry lastEntry, boolean isCurrentDateEntry) {
+        Date date = new Date();
+        String lastEntryMonth = "", lastEntryYear = "";
+        String month = (String) DateFormat.format("MMMM", date);
+        String year = (String) DateFormat.format("yyyy", date);
+        String currentEntryMonth = (String) DateFormat.format("MMMM", entry.getEntryTime());
+        String currentEntryYear = (String) DateFormat.format("yyyy", entry.getEntryTime());
+        if (lastEntry != null) {
+            lastEntryMonth = (String) DateFormat.format("MMMM", lastEntry.getEntryTime());
+            lastEntryYear = (String) DateFormat.format("yyyy", lastEntry.getEntryTime());
+        }
+
+        if (lastEntry == null) {//first entry in the db
+            return month + "/" + year;
+        } else if (lastEntry.getNewMonth().equals("")) {//entry is in the middle where last entry's header is blank
+            return "";
+            //this is the case where we compare whether the current entry year/month > last entry's year/month
+        } else if (Utils.isDateGreater(entry, lastEntry)) {
+            if (isCurrentDateEntry) {
+                if (entry.getEntryMonth() > lastEntry.getEntryMonth())
+                    lastEntry.setNewMonth(lastEntryMonth + "/" + lastEntryYear);
+                else if (entry.getEntryYear() > lastEntry.getEntryYear())
+                    lastEntry.setNewMonth(lastEntryMonth + "/" + lastEntryYear);
+                else
+                    lastEntry.setNewMonth("");
+
+                lastEntry.setLatestEntry(false);
+                updateEntry(lastEntry);
+                return month + "/" + year;
+            } else {//back date entry
+                if (isOnlyEntryOfTheMonth(entry)) //this is the only entry of the month i.e no entries above this entry for the given month/year
+                    return currentEntryMonth + "/" + currentEntryYear;
+                else
+                    return "";
+            }
+        } else {
+            String newMonth = lastEntry.getNewMonth();
+            lastEntry.setNewMonth("");
+            lastEntry.setLatestEntry(false);
+            updateEntry(lastEntry);
+
+            return newMonth;
+        }
+    }
+
+    private boolean isOnlyEntryOfTheMonth(Entry entry) {
+        Entry entry1 = entryDao.getEntryForMonthWithNewMonth(entry.getTabId(), entry.getEntryMonth(), entry.getEntryYear(), entry.getEntryTime());
+        return entry1 != null ? false : true;
     }
 
     public int updateEntry(Entry entry) {
