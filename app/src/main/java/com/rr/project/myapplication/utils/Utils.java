@@ -1,14 +1,23 @@
 package com.rr.project.myapplication.utils;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
+import android.os.Build;
+import android.os.Environment;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rr.project.myapplication.dao.Entry;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.nio.channels.FileChannel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -105,6 +114,113 @@ public class Utils {
         else if (entry1.getEntryYear() > entry2.getEntryYear())
             return true;
         else return false;
+    }
+
+    public static void uploadFile(Context context) {
+        try {
+//            File sd = Environment.getExternalStorageDirectory();
+            File sd = new File(Environment.getExternalStorageDirectory() + File.separator + "Wallet BackUp");
+            sd.mkdirs();
+
+            if (sd.canWrite()) {
+                String backupDBPath = "/data/data/" + context.getPackageName() + "/databases/wallet_db";
+                String currentDBPath = "wallet_db.db";
+                File currentDB = new File(sd, currentDBPath);
+                File backupDB = new File(backupDBPath);
+
+                if (currentDB.exists()) {
+                    FileChannel src = new FileInputStream(currentDB).getChannel();
+                    FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                    dst.transferFrom(src, 0, src.size());
+                    src.close();
+                    dst.close();
+                }
+            }
+            if (sd.canWrite()) {
+                String backupDBPath = "/data/data/" + context.getPackageName() + "/databases/wallet_db-shm";
+                String currentDBPath = "wallet_db-shm";
+                File currentDB = new File(sd, currentDBPath);
+                File backupDB = new File(backupDBPath);
+
+                if (currentDB.exists()) {
+                    FileChannel src = new FileInputStream(currentDB).getChannel();
+                    FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                    dst.transferFrom(src, 0, src.size());
+                    src.close();
+                    dst.close();
+                }
+            }
+            if (sd.canWrite()) {
+                String backupDBPath = "/data/data/" + context.getPackageName() + "/databases/wallet_db-wal";
+                String currentDBPath = "wallet_db-wal";
+                File currentDB = new File(sd, currentDBPath);
+                File backupDB = new File(backupDBPath);
+
+                if (currentDB.exists()) {
+                    FileChannel src = new FileInputStream(currentDB).getChannel();
+                    FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                    dst.transferFrom(src, 0, src.size());
+                    src.close();
+                    dst.close();
+                }
+            }
+        } catch (Exception e) {
+            Toast.makeText(context, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static void downloadFile(Context context) {
+        try {
+//            File sd = Environment.getExternalStorageDirectory();
+            File sd = new File(Environment.getExternalStorageDirectory() + File.separator + "Wallet BackUp");
+            sd.mkdirs();
+
+            if (sd.canWrite()) {
+                String currentDBPath = "/data/data/" + context.getPackageName() + "/databases/wallet_db";
+                String backupDBPath = "wallet_db.db";
+                File currentDB = new File(currentDBPath);
+                File backupDB = new File(sd, backupDBPath);
+
+                if (currentDB.exists()) {
+                    FileChannel src = new FileInputStream(currentDB).getChannel();
+                    FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                    dst.transferFrom(src, 0, src.size());
+                    src.close();
+                    dst.close();
+                }
+            }
+            if (sd.canWrite()) {
+                String currentDBPath = "/data/data/" + context.getPackageName() + "/databases/wallet_db-shm";
+                String backupDBPath = "wallet_db-shm";
+                File currentDB = new File(currentDBPath);
+                File backupDB = new File(sd, backupDBPath);
+
+                if (currentDB.exists()) {
+                    FileChannel src = new FileInputStream(currentDB).getChannel();
+                    FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                    dst.transferFrom(src, 0, src.size());
+                    src.close();
+                    dst.close();
+                }
+            }
+
+            if (sd.canWrite()) {
+                String currentDBPath = "/data/data/" + context.getPackageName() + "/databases/wallet_db-wal";
+                String backupDBPath = "wallet_db-wal";
+                File currentDB = new File(currentDBPath);
+                File backupDB = new File(sd, backupDBPath);
+
+                if (currentDB.exists()) {
+                    FileChannel src = new FileInputStream(currentDB).getChannel();
+                    FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                    dst.transferFrom(src, 0, src.size());
+                    src.close();
+                    dst.close();
+                }
+            }
+        } catch (Exception e) {
+            Toast.makeText(context, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

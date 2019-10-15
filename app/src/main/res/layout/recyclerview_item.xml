@@ -11,6 +11,14 @@
             name="clickHandler"
             type="com.rr.project.myapplication.OnSuperTabClickListener" />
 
+        <variable
+            name="position"
+            type="java.lang.Integer" />
+
+        <variable
+            name="superTabVM"
+            type="com.rr.project.myapplication.viewModel.SuperTabViewModel" />
+
     </data>
 
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -19,7 +27,7 @@
         android:layout_height="180dp"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:onClick="@{()-> clickHandler.onSuperTabClick(superTab)}"
+        android:onClick="@{()-> superTabVM.onSuperTabClick(superTab)}"
         card_view:cardBackgroundColor="@color/colorWhite"
         card_view:cardCornerRadius="10dp">
         <!--android:onClick="@{() -> handlers.onClick(superTab)}"-->
