@@ -12,7 +12,7 @@ import java.util.List;
 @Dao
 public interface SuperTabDao {
 
-    @Query("Select * from superTab_table")
+    @Query("Select * from superTab_table order by updateTime desc")
     LiveData<List<SuperTab>> getAllSuperTabs();
 
     @Delete
@@ -27,4 +27,6 @@ public interface SuperTabDao {
     @Query("Select count(*) from superTab_table where name= :superTabName")
     LiveData<Integer> getAllSuperTabsWithName(String superTabName);
 
+    @Query("Select * from superTab_table where id= :id")
+    SuperTab getSuperTabFromTabId(int id);
 }

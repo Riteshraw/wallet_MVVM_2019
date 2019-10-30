@@ -25,4 +25,7 @@ public interface TabDao {
 
     @Query("Select * from tab_table where superTabId= :superTabId")
     LiveData<List<Tab>> getAllTabsById(int superTabId);
+
+    @Query("Select superTabId from tab_table where id= :tabId")
+    int getSuperTabId(int tabId);
 }

@@ -40,36 +40,23 @@ public class MainActivity extends AppCompatActivity {
     private SuperTabViewModel sTabViewModel;
     private SuperTabAdapter sTabAdapter;
     private Context context;
-
-    /*You can enhance it when using Android databinding like this:
-    Define custom binding adapter:
-
-    @BindingAdapter({"digitsBeforeZero", "digitsAfterZero"})
-    public void bindAmountInputFilter(EditText view, int digitsBeforeZero, int digitsAfterZero) {
-        view.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(digitsBeforeZero, digitsAfterZero)});
-    }
-
-    Add attributes to EditText:
-    app:digitsBeforeZero="@{7}"
-    app:digitsAfterZero="@{2}"
-    and it will automatically set the input filter for the edittext*/
-
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        //setContentView(R.layout.activity_main);
         context = this;
+        requestPermission();
 
         sTabViewModel = ViewModelProviders.of(this).get(SuperTabViewModel.class);
-        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        recyclerView = binding.recyclerView;
         sTabViewModel.getAllSuperTabs().observe(this, new Observer<List<SuperTab>>() {
             @Override
             public void onChanged(@Nullable List<SuperTab> entries) {
                 sTabAdapter.setSuperTabs(entries);
+                //sTabAdapter.notifyDataSetChanged();
             }
         });
 
@@ -90,45 +77,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @OnClick(R.id.fab_download)
-    public void submit1() {
-        requestPermission();
-        Utils.downloadFile(this);
-    }
-
-    @OnClick(R.id.fab_upload)
-    public void submit2() {
-        requestPermission();
-        Utils.uploadFile(this);
-    }
-
-    /*public void addSuperTab(View view) {
-//        sTabViewModel.isSuperTabAlreadyPresent(new SuperTab("test", new Date().getTime()));
-        FragmentManager fm = getSupportFragmentManager();
-        EditNameDialogFragment editNameDialogFragment = EditNameDialogFragment.newInstance(Constant.SUPER_TAB, true);
-        editNameDialogFragment.show(fm, "fragment_edit_name");
-    }*/
-
-    /*private void showEditDialog() {
-        FragmentManager fm = getSupportFragmentManager();
-        EditNameDialogFragment editNameDialogFragment = EditNameDialogFragment.newInstance("Some Title");
-        editNameDialogFragment.show(fm, "fragment_edit_name");
-    }*/
-
     private void requestPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_SMS},
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_SMS,Manifest.permission.RECEIVE_SMS},
                     Constants.REQUEST_PERMISSION);
         } else {
-//            openFilePicker();
-            Toast.makeText(context, "Permissions already granted", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "Permissions already granted", Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == Constants.REQUEST_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(context, "Permissions granted", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "Permissions granted", Toast.LENGTH_SHORT).show();
         }
     }
 }

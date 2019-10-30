@@ -4,13 +4,17 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.rr.project.myapplication.MainActivity;
 import com.rr.project.myapplication.dao.Entry;
 
 import java.io.File;
@@ -116,7 +120,28 @@ public class Utils {
         else return false;
     }
 
-    public static void uploadFile(Context context) {
+    public static void uploadFile(final Context context) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setTitle("Upload Files");
+        alertDialogBuilder
+                .setMessage("Do you want to upload files ?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        uploadFileLogic(context);
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    public static void uploadFileLogic(Context context) {
         try {
 //            File sd = Environment.getExternalStorageDirectory();
             File sd = new File(Environment.getExternalStorageDirectory() + File.separator + "Wallet BackUp");
@@ -134,7 +159,8 @@ public class Utils {
                     dst.transferFrom(src, 0, src.size());
                     src.close();
                     dst.close();
-                }
+                } else
+                    Toast.makeText(context, "" + "Cannot find " + backupDBPath, Toast.LENGTH_SHORT).show();
             }
             if (sd.canWrite()) {
                 String backupDBPath = "/data/data/" + context.getPackageName() + "/databases/wallet_db-shm";
@@ -148,7 +174,8 @@ public class Utils {
                     dst.transferFrom(src, 0, src.size());
                     src.close();
                     dst.close();
-                }
+                } else
+                    Toast.makeText(context, "" + "Cannot find " + backupDBPath, Toast.LENGTH_SHORT).show();
             }
             if (sd.canWrite()) {
                 String backupDBPath = "/data/data/" + context.getPackageName() + "/databases/wallet_db-wal";
@@ -162,8 +189,11 @@ public class Utils {
                     dst.transferFrom(src, 0, src.size());
                     src.close();
                     dst.close();
-                }
+                } else
+                    Toast.makeText(context, "" + "Cannot find " + backupDBPath, Toast.LENGTH_SHORT).show();
             }
+            Toast.makeText(context, "" + "Files uploaded", Toast.LENGTH_SHORT).show();
+            context.startActivity(new Intent(context, MainActivity.class));
         } catch (Exception e) {
             Toast.makeText(context, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -187,7 +217,8 @@ public class Utils {
                     dst.transferFrom(src, 0, src.size());
                     src.close();
                     dst.close();
-                }
+                } else
+                    Toast.makeText(context, "" + "Cannot save " + backupDBPath, Toast.LENGTH_SHORT).show();
             }
             if (sd.canWrite()) {
                 String currentDBPath = "/data/data/" + context.getPackageName() + "/databases/wallet_db-shm";
@@ -201,7 +232,8 @@ public class Utils {
                     dst.transferFrom(src, 0, src.size());
                     src.close();
                     dst.close();
-                }
+                } else
+                    Toast.makeText(context, "" + "Cannot save " + backupDBPath, Toast.LENGTH_SHORT).show();
             }
 
             if (sd.canWrite()) {
@@ -216,8 +248,11 @@ public class Utils {
                     dst.transferFrom(src, 0, src.size());
                     src.close();
                     dst.close();
-                }
+                } else
+                    Toast.makeText(context, "" + "Cannot save " + backupDBPath, Toast.LENGTH_SHORT).show();
             }
+            Toast.makeText(context, "" + "Files saved", Toast.LENGTH_SHORT).show();
+
         } catch (Exception e) {
             Toast.makeText(context, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }

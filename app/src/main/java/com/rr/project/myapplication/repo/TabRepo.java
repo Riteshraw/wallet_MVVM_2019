@@ -58,4 +58,8 @@ public class TabRepo {
         return tabNameCount;
     }
 
+    public int getSuperTabId(int tabId) {
+        return tabDao.getSuperTabId(tabId);
+    }
+
 }

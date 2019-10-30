@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.rr.project.myapplication.dao.SuperTab;
 import com.rr.project.myapplication.dao.SuperTabDao;
 import com.rr.project.myapplication.db.WalletRoomDB;
+import com.rr.project.myapplication.utils.Utils;
 
 import java.util.List;
 
@@ -59,6 +60,12 @@ public class SuperTabRepo {
     public LiveData<Integer> getAllSuperTabsWithName(SuperTab superTab) {
         superTabNameCount = superTabDao.getAllSuperTabsWithName(superTab.getName());
         return superTabNameCount;
+    }
+
+    public void updateSuperTabDateTime(int tabId){
+        SuperTab superTab = superTabDao.getSuperTabFromTabId(tabId);
+        superTab.setUpdateTime(Utils.getCurrentDateInMiliSecs());
+        superTabDao.updateSuperTab(superTab);
     }
 
     /*public boolean isTabAlreadyPresent(SuperTab superTab) {

@@ -58,11 +58,6 @@ public class EntryRepo {
         }
 
         float balance = getBalance(entry, prevEntry);
-        //set balance for current entry
-        /*if (balance == 0) {
-            Toast.makeText(application, R.string.FIRST_ENTRY_ERROR_MSG, Toast.LENGTH_SHORT).show();
-            return;
-        } else */
         {
             entry.setBalance(balance);
         }
@@ -119,26 +114,15 @@ public class EntryRepo {
 
         if (isTopEntry && !isDateChange) {//Entry is latest entry ,we need to just find the 2ndTop entry for balance calculation
             deleteEntry(entry, originalDate);//delete entry from DB but maintain entry value for insertion
-//            entryDao.deleteEntry(entry);
             insertEntry(entry, true);//true so that inserted entry is the latest/current date entry
         } else {
             //Entry is not the latest entry for selected TAB, can be any entry but not latest oone
-            //            if (isTopEntry)
-//                setPrevEntryNewMonth(entry);
+            //if (isTopEntry)
+            //setPrevEntryNewMonth(entry);
             deleteEntry(entry, originalDate);//delete entry from DB but maintain entry value for insertion
-//            entryDao.deleteEntry(entry);
             insertEntry(entry, false);//false so that inserted entry is the back date entry
         }
-
     }
-
-//    private void setPrevEntryNewMonth(Entry entry) {// Not considered if entry has header and is not top entry
-//        Entry lastEntry = getLastEntryByTabId(entry.getTabId(), entry.getId());
-//        //write query for the same
-//        Entry secondLastEntry = get2ndLastEntryByTabId(lastEntry.getTabId(), lastEntry.getId());
-//        lastEntry.setNewMonth(getNewMonth(lastEntry, secondLastEntry, true));
-//        updateEntry(lastEntry);
-//    }
 
     private String getNewMonth(Entry entry, Entry lastEntry, boolean isCurrentDateEntry) {
         Date date = new Date();

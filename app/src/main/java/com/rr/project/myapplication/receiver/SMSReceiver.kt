@@ -1,4 +1,4 @@
-package com.rr.project.myapplication
+package com.rr.project.myapplication.receiver
 
 import android.content.BroadcastReceiver
 import android.content.Context

@@ -18,24 +18,17 @@ public class EntryViewModel extends AndroidViewModel {
     private LiveData<List<Entry>> listAllEntriesById;
     private EntryRepo entryRepo;
     private LiveData<Integer> tabNameCount;
+    private SuperTabViewModel superTabViewModel;
 
     public EntryViewModel(@NonNull Application application) {
         super(application);
         entryRepo = new EntryRepo(application);
         listAllEntries = entryRepo.getListEntries();
+        superTabViewModel = new SuperTabViewModel(application);
     }
 
     public LiveData<List<Entry>> getAllEntries() {
         return listAllEntries;
-    }
-
-    public void insertEntry(Entry entry, boolean isCurrentDateEntry) {
-        entryRepo.insertEntry(entry, isCurrentDateEntry);
-    }
-
-    public LiveData<Integer> isSuperAlreadyPresent(Tab tab) {
-        tabNameCount = entryRepo.getAllTabsWithName(tab);
-        return tabNameCount;
     }
 
     public LiveData<List<Entry>> getListAllEntriesById(int tabId) {
@@ -43,16 +36,32 @@ public class EntryViewModel extends AndroidViewModel {
         return listAllEntriesById;
     }
 
-    public void deleteEntry(Entry entry) {
-        entryRepo.deleteEntry(entry, 0);
+    public LiveData<Integer> isSuperAlreadyPresent(Tab tab) {
+        tabNameCount = entryRepo.getAllTabsWithName(tab);
+        return tabNameCount;
+    }
+
+    public void insertEntry(Entry entry, boolean isCurrentDateEntry) {
+        entryRepo.insertEntry(entry, isCurrentDateEntry);
+        updateSuperTabDateTime(entry.getTabId());
     }
 
     public void updateEntry(Entry editEntry, boolean isDateChange, long originalDate) {
-//        entryRepo.updateEntryWithAmtOrDateChange(editEntry, isDateChange);
         entryRepo.updateEntryWithAmtOrDateChangeByDelete(editEntry, isDateChange, originalDate);
+        updateSuperTabDateTime(editEntry.getTabId());
     }
 
     public void updateEntryNote(Entry editEntry) {
         entryRepo.updateEntry(editEntry);
+        updateSuperTabDateTime(editEntry.getTabId());
     }
+
+    public void deleteEntry(Entry entry) {
+        entryRepo.deleteEntry(entry, 0);
+    }
+
+    private void updateSuperTabDateTime(int tabId) {
+        superTabViewModel.updateSuperTabDateTime(tabId);
+    }
+
 }

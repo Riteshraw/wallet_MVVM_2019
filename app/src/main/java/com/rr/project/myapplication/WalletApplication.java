@@ -1,16 +1,14 @@
 package com.rr.project.myapplication;
 
-import android.Manifest;
 import android.app.Application;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.provider.Telephony;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 
 import com.rr.project.myapplication.dao.SuperTab;
 import com.rr.project.myapplication.dao.Tab;
+import com.rr.project.myapplication.receiver.SMSReceiver;
+import com.rr.project.myapplication.receiver.SmsBroadcastReceiver;
+import com.rr.project.myapplication.utils.Constants;
 
 public class WalletApplication extends Application {
     private static final int SMS_PERMISSION_CODE = 4564;
@@ -18,13 +16,17 @@ public class WalletApplication extends Application {
     private SuperTab superTab;
     private Tab tab;
     private boolean isEditEntry;
+    private SmsBroadcastReceiver smsBroadcastReceiver;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        SMSReceiver receiver = new SMSReceiver();
-        IntentFilter intentFilter = new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION);
-        this.registerReceiver(receiver, intentFilter);
+//        SMSReceiver receiver = new SMSReceiver();
+//        IntentFilter intentFilter = new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION);
+//        this.registerReceiver(receiver, intentFilter);
+
+        smsBroadcastReceiver = new SmsBroadcastReceiver(/*Constants.SERVICE_NUMBER, Constants.SERVICE_CONDITION*/);
+        registerReceiver(smsBroadcastReceiver, new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION));
     }
 
     public static WalletApplication getInstance() {
@@ -65,4 +67,9 @@ public class WalletApplication extends Application {
    /*public static LoginRepo getLoginRepo() {
         return LoginRepo.getInstance();
     }*/
+   @Override
+   public void onTerminate() {
+       unregisterReceiver(smsBroadcastReceiver);
+       super.onTerminate();
+   }
 }
