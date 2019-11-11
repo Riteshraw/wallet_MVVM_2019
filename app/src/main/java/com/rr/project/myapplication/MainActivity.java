@@ -5,11 +5,13 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.Telephony;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +24,7 @@ import com.rr.project.myapplication.adapter.SuperTabAdapter;
 import com.rr.project.myapplication.dao.SuperTab;
 import com.rr.project.myapplication.databinding.ActivityMainBinding;
 import com.rr.project.myapplication.fragment.EditNameDialogFragment;
+import com.rr.project.myapplication.receiver.SmsBroadcastReceiver;
 import com.rr.project.myapplication.utils.Constants;
 import com.rr.project.myapplication.utils.Utils;
 import com.rr.project.myapplication.viewModel.SuperTabViewModel;
@@ -79,7 +82,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void requestPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_SMS,Manifest.permission.RECEIVE_SMS},
+            requestPermissions(new String[]{
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_SMS,
+                            Manifest.permission.RECEIVE_SMS
+                    },
                     Constants.REQUEST_PERMISSION);
         } else {
             //Toast.makeText(context, "Permissions already granted", Toast.LENGTH_SHORT).show();

@@ -25,6 +25,8 @@ public class EntryRepo {
     private InsertCompleteListener insertCompleteListener;
     private UpdateCompleteListener updateCompleteListener;
     private boolean isCurrentDateEntry;
+    private Entry prevEntry = null;
+    private boolean isDateChange = true;
 
     public EntryRepo(Application application) {
         this.application = application;
@@ -38,11 +40,11 @@ public class EntryRepo {
     }
 
     public void insertEntry(final Entry entry, final boolean isCurrentDateEntry) {
-        Entry prevEntry = null;
         this.isCurrentDateEntry = isCurrentDateEntry;
         //isCurrentDateEntry = entry.getDateString().equals(Utils.getCurrentDateInString());
 
-        if (isCurrentDateEntry) {//current date entry
+        //current date entry and OR case-> when there is no entry in the tab and its not current date
+        if (isCurrentDateEntry || getLastEntryByTabId(entry.getTabId(), 0) == null) {
             entry.setLatestEntry(true);
             prevEntry = getLastEntryByTabId(entry.getTabId(), 0);
             if (prevEntry == null && entry.isDebit()) {//there is no entry i.e there is no entry in table
@@ -111,6 +113,7 @@ public class EntryRepo {
 
     public void updateEntryWithAmtOrDateChangeByDelete(final Entry entry, boolean isDateChange, long originalDate) {
         boolean isTopEntry = isTopEntry(entry);
+        this.isDateChange = isDateChange;
 
         if (isTopEntry && !isDateChange) {//Entry is latest entry ,we need to just find the 2ndTop entry for balance calculation
             deleteEntry(entry, originalDate);//delete entry from DB but maintain entry value for insertion
@@ -172,9 +175,12 @@ public class EntryRepo {
             lastEntryYear = (String) DateFormat.format("yyyy", lastEntry.getEntryTime());
         }
 
-        if (lastEntry == null) {//first entry in the db
+        //first entry in the db and && checks-> that there id no entry currently above it i.e the only entry
+        //then only we can have newMonth for it
+        if (lastEntry == null && getLastEntryByTabId(entry.getTabId(), 0) == null) {
             return month + "/" + year;
-        } else if (lastEntry.getNewMonth().equals("")) {//entry is in the middle where last entry's header is blank
+        }// lastentry is null means there are entries and || check ->entry is in the middle where last entry's header is blank
+        else if (lastEntry == null || lastEntry.getNewMonth().equals("")) {
             return "";
             //this is the case where we compare whether the current entry year/month > last entry's year/month
         } else if (Utils.isDateGreater(entry, lastEntry)) {
@@ -236,6 +242,7 @@ public class EntryRepo {
     public void deleteEntry(Entry entry, long originalDate) {
         Entry prevEntry = getPrevEntryByTabIdAndDate(entry.getTabId(), originalDate == 0 ? entry.getEntryTime() : originalDate);
         entryDao.deleteEntry(entry);
+        if (prevEntry == null) return;
         if (entry.isLatestEntry()) {
             updatePrevEntry(entry, prevEntry, true);
         } else {
@@ -243,7 +250,6 @@ public class EntryRepo {
                 updatePrevEntry(entry, prevEntry, false);
             updateBalanceOfEntriesAfterInsertion(prevEntry);
         }
-
     }
 
     private void updatePrevEntry(Entry entry, Entry prevEntry, boolean setLatestEntry) {
@@ -317,7 +323,9 @@ public class EntryRepo {
     private long setBackDateEntryDateTime(Entry entry, Entry lastEntry) {
         long time;
 
-        if (lastEntry.getDateString().equals(entry.getDateString()))
+        if (!isDateChange)
+            time = entry.getEntryTime();
+        else if (lastEntry != null && lastEntry.getDateString().equals(entry.getDateString()))
             time = lastEntry.getEntryTime() + 1000;// i.e add 1 sec to the dateTime of the last fetched entry so that the entry is below the last entry of the date
         else
             time = Utils.getDateInMiliSecsForBackEntry(entry.getDateString());//i.e there is no entry for given date, make the selected dateTime as entry time

@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.rr.project.myapplication.Constant;
 import com.rr.project.myapplication.TabActivity;
+import com.rr.project.myapplication.WalletApplication;
 import com.rr.project.myapplication.dao.SuperTab;
 import com.rr.project.myapplication.fragment.EditNameDialogFragment;
 import com.rr.project.myapplication.repo.SuperTabRepo;
@@ -55,6 +56,7 @@ public class SuperTabViewModel extends AndroidViewModel {
     }
 
     public void onSuperTabClick(SuperTab superTab) {
+        WalletApplication.getInstance().setSuperTab(superTab);
         Intent intent = new Intent(context, TabActivity.class);
         intent.putExtra(Constant.SUPER_TAB_NAME, superTab.getName());
         intent.putExtra(Constant.SUPER_TAB_ID, superTab.getId());

@@ -141,6 +141,27 @@ public class Utils {
         alertDialog.show();
     }
 
+    public static void downloadFile(final Context context) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setTitle("Download Files");
+        alertDialogBuilder
+                .setMessage("Do you want to download files ?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        downloadFileLogic(context);
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
     public static void uploadFileLogic(Context context) {
         try {
 //            File sd = Environment.getExternalStorageDirectory();
@@ -199,7 +220,7 @@ public class Utils {
         }
     }
 
-    public static void downloadFile(Context context) {
+    public static void downloadFileLogic(Context context) {
         try {
 //            File sd = Environment.getExternalStorageDirectory();
             File sd = new File(Environment.getExternalStorageDirectory() + File.separator + "Wallet BackUp");

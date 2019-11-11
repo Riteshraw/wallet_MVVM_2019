@@ -1,5 +1,6 @@
 package com.rr.project.myapplication.receiver;
 
+import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,21 +11,25 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.rr.project.myapplication.WalletApplication;
+import com.rr.project.myapplication.dao.Entry;
+import com.rr.project.myapplication.viewModel.EntryViewModel;
+
 public class SmsBroadcastReceiver extends BroadcastReceiver {
     private static final String TAG = "SmsBroadcastReceiver";
 
-    private final String serviceProviderNumber = "";
-    private final String serviceProviderSmsCondition= "";
+    private String serviceProviderNumber;
+    private String serviceProviderSmsCondition;
 
     private Listener listener;
 
     public SmsBroadcastReceiver() {
     }
 
-//    public SmsBroadcastReceiver(String serviceProviderNumber, String serviceProviderSmsCondition) {
-//        this.serviceProviderNumber = serviceProviderNumber;
-//        this.serviceProviderSmsCondition = serviceProviderSmsCondition;
-//    }
+    public SmsBroadcastReceiver(String serviceProviderNumber, String serviceProviderSmsCondition) {
+        this.serviceProviderNumber = serviceProviderNumber;
+        this.serviceProviderSmsCondition = serviceProviderSmsCondition;
+    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -35,6 +40,9 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
                 for (SmsMessage smsMessage : Telephony.Sms.Intents.getMessagesFromIntent(intent)) {
                     smsSender = smsMessage.getDisplayOriginatingAddress();
                     smsBody += smsMessage.getMessageBody();
+                    Log.v(TAG, ""+smsBody);
+                    Toast.makeText(context, "" + smsSender, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "" + smsBody, Toast.LENGTH_SHORT).show();
                 }
             } else {
                 Bundle smsBundle = intent.getExtras();
@@ -43,7 +51,7 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
                     if (pdus == null) {
                         // Display some error to the user
                         Toast.makeText(context, "SmsBundle had no pdus key", Toast.LENGTH_SHORT).show();
-                        Log.e(TAG, "SmsBundle had no pdus key");
+                        Log.v(TAG, "SmsBundle had no pdus key");
                         return;
                     }
                     SmsMessage[] messages = new SmsMessage[pdus.length];
@@ -61,14 +69,28 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
                 }
             }*/
 
-            if (smsSender.contains(serviceProviderNumber) && smsBody.contains(serviceProviderSmsCondition) &&
-                    smsBody.contains("credited")) {
+            if (smsSender.contains(serviceProviderNumber) &&
+                    (smsBody.contains(serviceProviderSmsCondition) || smsBody.contains("credited"))) {
                 /*if (listener != null) {
                     listener.onTextReceived(smsBody);
                 }*/
                 Toast.makeText(context, "" + smsBody, Toast.LENGTH_SHORT).show();
+                addEntry(smsBody);
             }
         }
+    }
+
+    public void addEntry(String smsBody) {
+        /*new EntryViewModel(WalletApplication.getInstance()).insertEntry(
+                new Entry(
+                        ,
+                        amt,
+                        smsBody.contains(serviceProviderSmsCondition) ? true : false,
+                        3,//ICICI from DB
+                        dateTime,
+                        txt_entry_date.getText().toString(),
+                        true
+                ), true);*/
     }
 
     void setListener(Listener listener) {

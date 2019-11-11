@@ -54,7 +54,7 @@ public class TabRepo {
     }
 
     public LiveData<Integer> getAllTabsWithName(Tab tab) {
-        tabNameCount = tabDao.getAllTabsWithName(tab.getTabName());
+        tabNameCount = tabDao.getAllTabsWithName(tab.getTabName(),tab.getSuperTabId());
         return tabNameCount;
     }
 

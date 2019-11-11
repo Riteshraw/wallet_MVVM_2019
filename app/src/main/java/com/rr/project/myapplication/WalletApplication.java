@@ -3,10 +3,10 @@ package com.rr.project.myapplication;
 import android.app.Application;
 import android.content.IntentFilter;
 import android.provider.Telephony;
+import android.util.Log;
 
 import com.rr.project.myapplication.dao.SuperTab;
 import com.rr.project.myapplication.dao.Tab;
-import com.rr.project.myapplication.receiver.SMSReceiver;
 import com.rr.project.myapplication.receiver.SmsBroadcastReceiver;
 import com.rr.project.myapplication.utils.Constants;
 
@@ -18,17 +18,6 @@ public class WalletApplication extends Application {
     private boolean isEditEntry;
     private SmsBroadcastReceiver smsBroadcastReceiver;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-//        SMSReceiver receiver = new SMSReceiver();
-//        IntentFilter intentFilter = new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION);
-//        this.registerReceiver(receiver, intentFilter);
-
-        smsBroadcastReceiver = new SmsBroadcastReceiver(/*Constants.SERVICE_NUMBER, Constants.SERVICE_CONDITION*/);
-        registerReceiver(smsBroadcastReceiver, new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION));
-    }
-
     public static WalletApplication getInstance() {
         if (appInstance == null)
             appInstance = new WalletApplication();
@@ -36,8 +25,21 @@ public class WalletApplication extends Application {
         return appInstance;
     }
 
-    private WalletApplication() {
+    public WalletApplication() {
         appInstance = this;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.v("WalletApplication", "WalletApplication on crete");
+
+//        SMSReceiver receiver = new SMSReceiver();
+//        IntentFilter intentFilter = new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION);
+//        this.registerReceiver(receiver, intentFilter);
+
+        smsBroadcastReceiver = new SmsBroadcastReceiver(Constants.SERVICE_NUMBER, Constants.SERVICE_CONDITION);
+        registerReceiver(smsBroadcastReceiver, new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION));
     }
 
     public SuperTab getSuperTab() {
