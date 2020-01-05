@@ -108,7 +108,7 @@ public class Utils {
 
     public static String removeTrailingZeros(float amt) {
 //        String s =
-        return String.valueOf((float) Math.round(amt * 100) / 100);
+        return removeTrailingZeros(String.valueOf((float) Math.round(amt * 100) / 100));
 //        return s.indexOf(".") < 0 ? s : s.replaceAll("0*$", "").replaceAll("\\.$", "");
     }
 

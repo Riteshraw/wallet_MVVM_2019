@@ -42,7 +42,7 @@ public class EntryViewModel extends AndroidViewModel {
     }
 
     public void insertEntry(Entry entry, boolean isCurrentDateEntry) {
-        entryRepo.insertEntry(entry, isCurrentDateEntry);
+        entryRepo.insertEntry(entry, isCurrentDateEntry, false);
         updateSuperTabDateTime(entry.getTabId());
     }
 

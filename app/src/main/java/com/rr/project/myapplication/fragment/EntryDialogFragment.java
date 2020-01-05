@@ -179,6 +179,8 @@ public class EntryDialogFragment extends DialogFragment {
     @OnClick(R.id.btn_delete_entry)
     public void onDelete() {
         ((TabActivity) getActivity()).deleteEntry(editEntry);
+        dismiss();
+        Utils.hideKeyboard(getActivity());
     }
 
     private boolean validate() {

@@ -39,7 +39,7 @@ public class EntryRepo {
         return listEntries;
     }
 
-    public void insertEntry(final Entry entry, final boolean isCurrentDateEntry) {
+    public void insertEntry(final Entry entry, final boolean isCurrentDateEntry, boolean isUpdate) {
         this.isCurrentDateEntry = isCurrentDateEntry;
         //isCurrentDateEntry = entry.getDateString().equals(Utils.getCurrentDateInString());
 
@@ -54,7 +54,7 @@ public class EntryRepo {
         } else {//back date entry
             entry.setLatestEntry(false);
             prevEntry = getLastEntryByTabIdAndDate(entry.getTabId(), entry.getDateString());
-            if (prevEntry == null)//when there is no matching dateString for the back entry then fetch the last entry as per entryTime
+            if (prevEntry == null || isUpdate)//when there is no matching dateString for the back entry then fetch the last entry as per entryTime
                 prevEntry = getPrevEntryByTabIdAndDate(entry.getTabId(), entry.getEntryTime());
             entry.setEntryTime(setBackDateEntryDateTime(entry, prevEntry));
         }
@@ -117,13 +117,13 @@ public class EntryRepo {
 
         if (isTopEntry && !isDateChange) {//Entry is latest entry ,we need to just find the 2ndTop entry for balance calculation
             deleteEntry(entry, originalDate);//delete entry from DB but maintain entry value for insertion
-            insertEntry(entry, true);//true so that inserted entry is the latest/current date entry
+            insertEntry(entry, true, true);//true so that inserted entry is the latest/current date entry
         } else {
             //Entry is not the latest entry for selected TAB, can be any entry but not latest oone
             //if (isTopEntry)
             //setPrevEntryNewMonth(entry);
             deleteEntry(entry, originalDate);//delete entry from DB but maintain entry value for insertion
-            insertEntry(entry, false);//false so that inserted entry is the back date entry
+            insertEntry(entry, false, true);//false so that inserted entry is the back date entry
         }
     }
 
