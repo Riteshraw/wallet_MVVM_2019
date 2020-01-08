@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/navigation_tab"
+        android:checked="true"
+        android:icon="@mipmap/icons_bnav1"
+        android:title="@string/title_tabs"
+        app:showAsAction="always|withText" />
+
+    <item
+        android:id="@+id/navigation_categry"
+        android:icon="@mipmap/icons_bnav2"
+        android:title="@string/title_categorys"
+        app:showAsAction="always|withText" />
+
+</menu>

@@ -1,49 +1,26 @@
 package com.rr.project.myapplication;
 
 import android.Manifest;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.Telephony;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.Toast;
+import android.view.MenuItem;
 
-import com.rr.project.myapplication.adapter.SuperTabAdapter;
-import com.rr.project.myapplication.dao.SuperTab;
 import com.rr.project.myapplication.databinding.ActivityMainBinding;
-import com.rr.project.myapplication.fragment.EditNameDialogFragment;
-import com.rr.project.myapplication.receiver.SmsBroadcastReceiver;
+import com.rr.project.myapplication.fragment.FragmentMain;
 import com.rr.project.myapplication.utils.Constants;
-import com.rr.project.myapplication.utils.Utils;
-import com.rr.project.myapplication.viewModel.SuperTabViewModel;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.nio.channels.FileChannel;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
-    private SuperTabViewModel sTabViewModel;
-    private SuperTabAdapter sTabAdapter;
     private Context context;
-    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,32 +29,32 @@ public class MainActivity extends AppCompatActivity {
         context = this;
         requestPermission();
 
-        sTabViewModel = ViewModelProviders.of(this).get(SuperTabViewModel.class);
-        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        recyclerView = binding.recyclerView;
-        sTabViewModel.getAllSuperTabs().observe(this, new Observer<List<SuperTab>>() {
+        final ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        binding.bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onChanged(@Nullable List<SuperTab> entries) {
-                sTabAdapter.setSuperTabs(entries);
-                //sTabAdapter.notifyDataSetChanged();
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.navigation_tab:
+                        openFragment(new FragmentMain());
+                        return true;
+                    case R.id.navigation_categry:
+                        openFragment(new FragmentMain());
+                        return true;
+                }
+                return false;
             }
         });
 
-        binding.setVariable(BR.superTabVM, sTabViewModel);
+        openFragment(new FragmentMain());
 
-        sTabAdapter = new SuperTabAdapter(this, sTabViewModel);
-        recyclerView.setAdapter(sTabAdapter);
+    }
 
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
-//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
-//        ((GridLayoutManager) layoutManager).getOrientation());
-//        recyclerView.addItemDecoration(dividerItemDecoration);
-        //Check this link for gridlayout item spacing
-        //https://www.dev2qa.com/android-recyclerview-example/
-//        GridDividerDecoration gridItemDivider2 = new GridDividerDecoration(getApplicationContext());
-//        recyclerView.addItemDecoration(gridItemDivider2);
-        recyclerView.setLayoutManager(layoutManager);
-
+    private void openFragment(Fragment fragment) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.frame_container, fragment);
+        ft.commit();
     }
 
     private void requestPermission() {

@@ -2,4 +2,6 @@
     <string name="app_name">2019 Wallet</string>
     <string name="FIRST_ENTRY_ERROR_MSG">First entry cannot be Debit</string>
     <string name="delete_entry">Delete</string>
+    <string name="title_tabs">Tabs</string>
+    <string name="title_categorys">Category</string>
 </resources>
