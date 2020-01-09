@@ -38,14 +38,14 @@ import butterknife.ButterKnife;
  * Created by admin on 22-Mar-18.
  */
 
-public class FragmentMain extends Fragment {
+public class FragmentSuperTab extends Fragment {
 
     private SuperTabViewModel sTabViewModel;
     private SuperTabAdapter sTabAdapter;
     private Context context;
     private RecyclerView recyclerView;
 
-    public FragmentMain() {
+    public FragmentSuperTab() {
     }
 
     @Override
@@ -92,7 +92,6 @@ public class FragmentMain extends Fragment {
                     entryAdapter.setEntry(entries);
             }
         });*/
-
 
     }
 

@@ -10,7 +10,9 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.rr.project.myapplication.databinding.ActivityMainBinding
-import com.rr.project.myapplication.fragment.FragmentMain
+import com.rr.project.myapplication.fragment.FragmentCategory
+import com.rr.project.myapplication.fragment.FragmentSuperTab
+import com.rr.project.myapplication.fragment.FragmentSuperTabKotlin
 import com.rr.project.myapplication.utils.Constants
 
 class MainActivityKotlin : AppCompatActivity() {
@@ -23,21 +25,22 @@ class MainActivityKotlin : AppCompatActivity() {
 
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
 
-        val bottomNav = binding.bottomNavigation
-
         binding.bottomNavigation.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.navigation_tab -> {
-                    openFragment(FragmentMain())
+                    openFragment(FragmentSuperTabKotlin())
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_categry -> {
-                    openFragment(FragmentMain())
+                    openFragment(FragmentCategory())
                     return@OnNavigationItemSelectedListener true
                 }
             }
             false
         })
+
+        openFragment(FragmentSuperTabKotlin())
+
     }
 
     private fun openFragment(fragment: Fragment) {

@@ -27,8 +27,9 @@ public abstract class WalletRoomDB extends RoomDatabase {
         if (INSTANCE == null) {
             synchronized (WalletRoomDB.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context, WalletRoomDB.class,"wallet_db").
-                            allowMainThreadQueries().build();
+                    Builder<WalletRoomDB> wallet_db = Room.databaseBuilder(context, WalletRoomDB.class, "wallet_db");
+                    wallet_db.allowMainThreadQueries();
+                    INSTANCE = wallet_db.build();
                 }
             }
         }

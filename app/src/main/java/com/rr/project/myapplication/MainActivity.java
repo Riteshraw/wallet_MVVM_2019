@@ -15,7 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.rr.project.myapplication.databinding.ActivityMainBinding;
-import com.rr.project.myapplication.fragment.FragmentMain;
+import com.rr.project.myapplication.fragment.FragmentCategory;
+import com.rr.project.myapplication.fragment.FragmentSuperTab;
+import com.rr.project.myapplication.fragment.FragmentSuperTabKotlin;
 import com.rr.project.myapplication.utils.Constants;
 
 
@@ -36,17 +38,17 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_tab:
-                        openFragment(new FragmentMain());
+                        openFragment(new FragmentSuperTab());
                         return true;
                     case R.id.navigation_categry:
-                        openFragment(new FragmentMain());
+                        openFragment(new FragmentCategory());
                         return true;
                 }
                 return false;
             }
         });
 
-        openFragment(new FragmentMain());
+        openFragment(new FragmentSuperTab());
 
     }
 
