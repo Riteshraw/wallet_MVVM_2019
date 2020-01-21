@@ -1,8 +1,8 @@
 package com.rr.project.myapplication.dao;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.PrimaryKey;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -22,6 +22,8 @@ public class Entry implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private int tabId;
+    private int catId;
+    private String catName;
     private String note;
     private float amount;
     private boolean isDebit;
@@ -118,6 +120,22 @@ public class Entry implements Parcelable {
 
     public void setNewMonth(String newMonth) {
         this.newMonth = newMonth;
+    }
+
+    public int getCatId() {
+        return catId;
+    }
+
+    public void setCatId(int catId) {
+        this.catId = catId;
+    }
+
+    public String getCatName() {
+        return catName;
+    }
+
+    public void setCatName(String catName) {
+        this.catName = catName;
     }
 
     public String getDateFormatted() {

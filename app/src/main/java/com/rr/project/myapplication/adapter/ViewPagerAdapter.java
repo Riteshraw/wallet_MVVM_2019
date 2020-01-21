@@ -2,12 +2,11 @@ package com.rr.project.myapplication.adapter;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 
-import com.rr.project.myapplication.WalletApplication;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+
 import com.rr.project.myapplication.dao.Tab;
 import com.rr.project.myapplication.fragment.FragmentTab;
 import com.rr.project.myapplication.utils.Constants;

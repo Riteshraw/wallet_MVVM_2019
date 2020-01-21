@@ -1,6 +1,6 @@
 package com.rr.project.myapplication.dao;
 
-import android.arch.persistence.room.TypeConverter;
+import androidx.room.TypeConverter;
 
 import java.util.Date;
 

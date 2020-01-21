@@ -3,12 +3,12 @@ package com.rr.project.myapplication
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.os.Build
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import com.rr.project.myapplication.databinding.ActivityMainBinding
 import com.rr.project.myapplication.fragment.FragmentCategory
 import com.rr.project.myapplication.fragment.FragmentSuperTab
@@ -43,7 +43,7 @@ class MainActivityKotlin : AppCompatActivity() {
 
     }
 
-    private fun openFragment(fragment: Fragment) {
+    private fun openFragment(fragment: androidx.fragment.app.Fragment) {
         val fm = supportFragmentManager
         val ft = fm.beginTransaction()
         ft.replace(R.id.frame_container, fragment)

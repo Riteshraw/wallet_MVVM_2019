@@ -1,15 +1,15 @@
 package com.rr.project.myapplication.fragment
 
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.rr.project.myapplication.R
 import com.rr.project.myapplication.databinding.FragmentCategoryBinding
 
-class FragmentCategory : Fragment() {
+class FragmentCategory : androidx.fragment.app.Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

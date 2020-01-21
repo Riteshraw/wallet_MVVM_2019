@@ -1,38 +1,25 @@
 package com.rr.project.myapplication.fragment;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.databinding.DataBindingUtil;
+import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.rr.project.myapplication.BR;
 import com.rr.project.myapplication.R;
-import com.rr.project.myapplication.adapter.EntryAdapter;
 import com.rr.project.myapplication.adapter.SuperTabAdapter;
-import com.rr.project.myapplication.dao.Entry;
 import com.rr.project.myapplication.dao.SuperTab;
-import com.rr.project.myapplication.dao.Tab;
-import com.rr.project.myapplication.databinding.ActivityMainBinding;
 import com.rr.project.myapplication.databinding.FragmentMainBinding;
-import com.rr.project.myapplication.utils.Constants;
-import com.rr.project.myapplication.viewModel.EntryViewModel;
 import com.rr.project.myapplication.viewModel.SuperTabViewModel;
 
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by admin on 22-Mar-18.

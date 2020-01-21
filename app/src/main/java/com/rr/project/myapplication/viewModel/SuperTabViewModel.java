@@ -1,15 +1,14 @@
 package com.rr.project.myapplication.viewModel;
 
 import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LiveData;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
 import com.rr.project.myapplication.Constant;
@@ -71,11 +70,11 @@ public class SuperTabViewModel extends AndroidViewModel {
         }
     }
 
-    public void onSuperTabDwn(View view){
+    public void onSuperTabDwn(View view) {
         Utils.downloadFile(view.getContext());
     }
 
-    public void onSuperTabUpload(final View view){
+    public void onSuperTabUpload(final View view) {
         Utils.uploadFile(view.getContext());
     }
 

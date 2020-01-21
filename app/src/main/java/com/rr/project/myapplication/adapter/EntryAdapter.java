@@ -1,9 +1,8 @@
 package com.rr.project.myapplication.adapter;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.RecyclerView;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +10,7 @@ import android.view.ViewGroup;
 import com.rr.project.myapplication.R;
 import com.rr.project.myapplication.TabActivity;
 import com.rr.project.myapplication.dao.Entry;
-import com.rr.project.myapplication.dao.SuperTab;
-import com.rr.project.myapplication.dao.Tab;
-import com.rr.project.myapplication.databinding.RecyclerviewItemBinding;
 import com.rr.project.myapplication.databinding.RecyclerviewItemTabBinding;
-import com.rr.project.myapplication.fragment.FragmentTab;
 
 import java.util.List;
 

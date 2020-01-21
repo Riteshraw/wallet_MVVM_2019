@@ -1,14 +1,11 @@
 package com.rr.project.myapplication.utils;
 
-import android.Manifest;
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Environment;
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,7 +17,6 @@ import com.rr.project.myapplication.dao.Entry;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.math.BigDecimal;
 import java.nio.channels.FileChannel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

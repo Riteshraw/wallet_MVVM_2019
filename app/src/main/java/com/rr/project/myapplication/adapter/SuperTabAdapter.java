@@ -1,14 +1,13 @@
 package com.rr.project.myapplication.adapter;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
-import android.support.v7.widget.RecyclerView;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.rr.project.myapplication.BR;
-import com.rr.project.myapplication.OnSuperTabClickListener;
 import com.rr.project.myapplication.R;
 import com.rr.project.myapplication.dao.SuperTab;
 import com.rr.project.myapplication.databinding.RecyclerviewItemBinding;

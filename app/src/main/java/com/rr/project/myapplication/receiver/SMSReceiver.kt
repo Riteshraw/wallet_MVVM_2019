@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.provider.Telephony
-import android.support.v4.app.NotificationCompat.getExtras
+import androidx.core.app.NotificationCompat.getExtras
 import android.os.Bundle
 
 

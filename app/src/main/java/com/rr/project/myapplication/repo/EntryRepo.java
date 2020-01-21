@@ -1,7 +1,7 @@
 package com.rr.project.myapplication.repo;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
+import androidx.lifecycle.LiveData;
 import android.os.AsyncTask;
 import android.text.format.DateFormat;
 import android.widget.Toast;

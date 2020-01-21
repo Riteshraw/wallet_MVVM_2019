@@ -1,22 +1,17 @@
 package com.rr.project.myapplication.fragment;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.view.Gravity;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -29,8 +24,6 @@ import com.rr.project.myapplication.TabActivity;
 import com.rr.project.myapplication.WalletApplication;
 import com.rr.project.myapplication.dao.Entry;
 import com.rr.project.myapplication.utils.Utils;
-
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
