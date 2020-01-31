@@ -9,8 +9,7 @@ import java.util.*
 data class Category(
         @PrimaryKey(autoGenerate = true) val id: Int,
         val catName: String,
-        val updateTime: Long
-) {
+        val updateTime: Long) {
 
     fun getFormattedUpdateTime() = SimpleDateFormat("dd/MM/yyyy hh:mm").format(Date(updateTime))
 

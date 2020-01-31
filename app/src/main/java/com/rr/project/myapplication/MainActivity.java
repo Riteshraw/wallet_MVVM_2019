@@ -42,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
                         openFragment(new FragmentSuperTab());
                         return true;
                     case R.id.navigation_categry:
-                        openFragment(new FragmentCategory());
+                        openFragment(new FragmentSuperTab());
+//                        openFragment(new FragmentCategory());
                         return true;
                 }
                 return false;

@@ -5,6 +5,7 @@ import android.content.IntentFilter;
 import android.provider.Telephony;
 import android.util.Log;
 
+import com.rr.project.myapplication.dao.Category;
 import com.rr.project.myapplication.dao.SuperTab;
 import com.rr.project.myapplication.dao.Tab;
 import com.rr.project.myapplication.receiver.SmsBroadcastReceiver;
@@ -15,6 +16,7 @@ public class WalletApplication extends Application {
     private static WalletApplication appInstance;
     private SuperTab superTab;
     private Tab tab;
+    private Category category;
     private boolean isEditEntry;
     private SmsBroadcastReceiver smsBroadcastReceiver;
 
@@ -56,6 +58,14 @@ public class WalletApplication extends Application {
 
     public void setTab(Tab tab) {
         this.tab = tab;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public boolean isEditEntry() {

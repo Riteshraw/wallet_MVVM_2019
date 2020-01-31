@@ -7,7 +7,7 @@ import androidx.room.*
 interface CategoryDao {
 
     @Query("Select * from category_table order by updateTime desc")
-    fun getAllCatergories(): LiveData<List<Category?>?>?
+    fun getAllCatergories(): LiveData<List<Category>>
 
     @Delete
     fun deleteCategory(category: Category?)

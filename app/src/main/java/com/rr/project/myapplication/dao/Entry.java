@@ -22,8 +22,6 @@ public class Entry implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private int tabId;
-    private int catId;
-    private String catName;
     private String note;
     private float amount;
     private boolean isDebit;
@@ -34,6 +32,8 @@ public class Entry implements Parcelable {
     private int entryYear;
     private String newMonth;
     private boolean isLatestEntry;
+//    private int superTabId;
+//    private String superTabName;
 
     public Entry() {
     }
@@ -122,22 +122,22 @@ public class Entry implements Parcelable {
         this.newMonth = newMonth;
     }
 
-    public int getCatId() {
-        return catId;
+    /*public int getSuperTabId() {
+        return superTabId;
     }
 
-    public void setCatId(int catId) {
-        this.catId = catId;
+    public void setSuperTabId(int superTabId) {
+        this.superTabId = superTabId;
     }
 
-    public String getCatName() {
-        return catName;
+    public String getSuperTabName() {
+        return superTabName;
     }
 
-    public void setCatName(String catName) {
-        this.catName = catName;
+    public void setSuperTabName(String superTabName) {
+        this.superTabName = superTabName;
     }
-
+*/
     public String getDateFormatted() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy");
         return formatter.format(new Date(entryTime));

@@ -24,7 +24,43 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_weight="1" />
+            app:layout_constraintVertical_weight="1">
+
+        </FrameLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="@{(view)-> superTabVM.onAddSuperTab(view)}"
+            android:src="@drawable/ic_action_add"
+            app:elevation="6dp"
+            app:layout_constraintBottom_toBottomOf="@+id/frame_container"
+            app:layout_constraintRight_toRightOf="@+id/frame_container" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_download"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:onClick="@{(view)-> superTabVM.onSuperTabDwn(view)}"
+                android:src="@drawable/ic_file_download_black_24dp"
+                app:elevation="6dp"
+                app:layout_constraintBottom_toBottomOf="@+id/frame_container"
+                app:layout_constraintRight_toLeftOf="@+id/fab"
+                app:pressedTranslationZ="12dp" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_upload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:onClick="@{(view)-> superTabVM.onSuperTabUpload(view)}"
+                android:src="@drawable/ic_publish_black_24dp"
+                app:elevation="6dp"
+                app:layout_constraintBottom_toBottomOf="@+id/frame_container"
+                app:layout_constraintRight_toLeftOf="@+id/fab_download" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
@@ -36,40 +72,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/frame_container"
             app:menu="@menu/bottom_nav" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:onClick="@{(view)-> superTabVM.onAddSuperTab(view)}"
-            android:src="@drawable/ic_action_add"
-            app:elevation="6dp"
-            app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
-            app:layout_constraintRight_toRightOf="parent" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_download"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:onClick="@{(view)-> superTabVM.onSuperTabDwn(view)}"
-            android:src="@drawable/ic_file_download_black_24dp"
-            app:elevation="6dp"
-            app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
-            app:layout_constraintRight_toLeftOf="@+id/fab"
-            app:pressedTranslationZ="12dp" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_upload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:onClick="@{(view)-> superTabVM.onSuperTabUpload(view)}"
-            android:src="@drawable/ic_publish_black_24dp"
-            app:elevation="6dp"
-            app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
-            app:layout_constraintRight_toLeftOf="@+id/fab_download" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

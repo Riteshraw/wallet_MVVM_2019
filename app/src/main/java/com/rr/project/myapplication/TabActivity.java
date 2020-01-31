@@ -2,17 +2,24 @@ package com.rr.project.myapplication;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.tabs.TabLayout;
+
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.InputFilter;
 import android.view.View;
 import android.widget.Button;
@@ -92,8 +99,15 @@ public class TabActivity extends AppCompatActivity {
         //limit edt_Amount filed to 2 decimal places
         edt_Amount.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(10, 2)});
 
-        int superTabId = getIntent().getIntExtra(Constant.SUPER_TAB_ID, 0);
-        String supTabName = getIntent().getStringExtra(Constant.SUPER_TAB_NAME);
+        String supTabName;
+        int superTabId;
+        if (getIntent().getIntExtra(Constant.SUPER_TAB_ID, 0) != 0) {
+            superTabId = getIntent().getIntExtra(Constant.SUPER_TAB_ID, 0);
+            supTabName = getIntent().getStringExtra(Constant.SUPER_TAB_NAME);
+        } else {
+            superTabId = getIntent().getIntExtra(Constant.SUPER_CATEGORY_ID, 0);
+            supTabName = getIntent().getStringExtra(Constant.SUPER_CATEGORY_NAME);
+        }
         setToolbarTitle(supTabName);
 
         setSupportActionBar(toolbar);
